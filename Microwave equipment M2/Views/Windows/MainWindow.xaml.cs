@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Microwave_equipment_M2.View
+namespace Microwave_equipment_M2.View.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
