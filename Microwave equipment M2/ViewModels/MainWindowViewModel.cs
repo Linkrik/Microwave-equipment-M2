@@ -28,5 +28,19 @@ namespace Microwave_equipment_M2.ViewModels
             //}
         }
         #endregion
+
+        #region Status : string - Статус программы
+
+        /// <summary>Статус подключения</summary>
+        private string _status = "не подключен";
+
+        /// <summary>Статус подключения</summary>
+        public string Status
+        {
+            get => _status;
+            set => Set(ref _status, value);
+        }
+
+        #endregion
     }
 }
