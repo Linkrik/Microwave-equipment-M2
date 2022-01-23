@@ -1,4 +1,6 @@
 ﻿
+//using Microwave_equipment_M2.ViewModels;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace Microwave_equipment_M2.View.Windows
         public MainWindow()
         {
             InitializeComponent();
-           
+            //DataContext = new MainWindowViewModel();
         }
 
 

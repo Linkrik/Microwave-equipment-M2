@@ -4,9 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Microwave_equipment_M2.View.Windows"
-       
+        xmlns:vm ="clr-namespace:Microwave_equipment_M2.ViewModels"       
+        
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000">
+        Title="{Binding Title}"
+        Height="650" Width="1000">
 
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <TextBox Width="300" 
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 TextWrapping="Wrap"
+                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                 />
+    </Grid>
 
 </Window>
