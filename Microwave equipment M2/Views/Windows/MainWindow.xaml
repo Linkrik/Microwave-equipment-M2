@@ -8,7 +8,7 @@
         
         mc:Ignorable="d"
         Title="{Binding Title}"
-        Height="650" Width="1000">
+        Height="350" MinHeight="350" Width="600" MinWidth="600">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -19,7 +19,7 @@
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход"/>
             </MenuItem>
-            <MenuItem Header="Помощь">
+            <MenuItem Header="Справка">
                 <MenuItem Header="О программе"/>
             </MenuItem>
         </Menu>
@@ -32,19 +32,32 @@
             </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Вкладка 1">
+            
+            <!-- Окно подключения к модулю -->
+            <TabItem Header="Подключение">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="63*" />
-                        <RowDefinition Height="325*"/>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="157*"/>
-                        <ColumnDefinition Width="637*"/>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
+                    
+                    <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Настройка подключения" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,5"></TextBlock>
+                            <Separator Background="Black" />
+                            <TextBlock Text="Порт:" Margin="5,0,0,0"></TextBlock>
+                            <ComboBox Margin="5,0" Height="30"></ComboBox>
+                            <ToggleButton Content="Открыть" Margin="5,5,5,0" Height="30"></ToggleButton>
+                            <Button Content="Переподключить" Margin="5,5,5,0" Height="30"></Button>
+                        </StackPanel>
+                    </Border>
+                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Вкладка 2"></TabItem>
+
+            <!-- Окно управления модулем -->
+            <TabItem Header="Управление"></TabItem>
         </TabControl>
     </DockPanel>
 
