@@ -13,7 +13,7 @@ namespace Microwave_equipment_M2.Infrastructure.Commands
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
 
-        LambdaCommand(Action<object> Execute, Predicate<object> CanExecute = null)
+        public LambdaCommand(Action<object> Execute, Predicate<object> CanExecute = null)
         {
             _execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
             _canExecute = CanExecute;
