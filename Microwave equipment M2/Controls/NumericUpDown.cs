@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Microwave_equipment_M2.Controls
 {
@@ -62,20 +52,25 @@ namespace Microwave_equipment_M2.Controls
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
                 "Value", typeof(int), typeof(NumericUpDown),
-                new PropertyMetadata(
-                    new PropertyChangedCallback(ValueChangedCallback)));
+                new PropertyMetadata(0,
+                    new PropertyChangedCallback(ValueChangedCallback),
+                    new CoerceValueCallback(CoerceValue)));
 
         public static readonly DependencyProperty MaxValueProperty =
             DependencyProperty.Register(
-                "MaxValue", typeof(int), typeof(NumericUpDown));
+                "MaxValue", typeof(int), typeof(NumericUpDown),
+                new PropertyMetadata(int.MaxValue));
 
         public static readonly DependencyProperty MinValueProperty =
             DependencyProperty.Register(
-                "MinValue", typeof(int), typeof(NumericUpDown));
+                "MinValue", typeof(int), typeof(NumericUpDown),
+                new PropertyMetadata(int.MinValue));
 
         public static readonly DependencyProperty StepValueProperty =
             DependencyProperty.Register(
-                "StepValue", typeof(int), typeof(NumericUpDown));
+                "StepValue", typeof(int), typeof(NumericUpDown),
+                new PropertyMetadata(1));
+
 
         public int Value
         {
@@ -101,42 +96,63 @@ namespace Microwave_equipment_M2.Controls
             set => SetValue(StepValueProperty, value);
         }
 
+        private static object CoerceValue(DependencyObject element, object value)
+        {
+            int newValue = (int)value;
+            NumericUpDown control = (NumericUpDown)element;
+
+            newValue = Math.Max(control.MinValue, Math.Min(control.MaxValue, newValue));
+
+            return newValue;
+        }
+
+
+        private static object CoerceStepValue(DependencyObject element, object value)
+        {
+            int newValue = (int)value;
+            NumericUpDown control = (NumericUpDown)element;
+
+            newValue = Math.Max(1, newValue);
+
+            return newValue;
+        }
+
+
         private static void ValueChangedCallback(DependencyObject obj,
             DependencyPropertyChangedEventArgs args)
         {
-            NumericUpDown ctl = (NumericUpDown)obj;
+            NumericUpDown control = (NumericUpDown)obj;
             int newValue = (int)args.NewValue;
 
             // Call UpdateStates because the Value might have caused the
             // control to change ValueStates.
-            ctl.UpdateStates(true);
+            control.UpdateStates(true);
 
             // Call OnValueChanged to raise the ValueChanged event.
-            ctl.OnValueChanged(
+            control.OnValueChanged(
                 new ValueChangedEventArgs(NumericUpDown.ValueChangedEvent,
                     newValue));
         }
 
-        private static void MaxValueChangedCallback(DependencyObject obj,
+        private static void StepValueChangedCallback(DependencyObject obj,
             DependencyPropertyChangedEventArgs args)
         {
-            NumericUpDown ctl = (NumericUpDown)obj;
+            NumericUpDown control = (NumericUpDown)obj;
             int newValue = (int)args.NewValue;
 
-            // Call UpdateStates because the Value might have caused the
-            // control to change ValueStates.
-            ctl.UpdateStates(true);
-
             // Call OnValueChanged to raise the ValueChanged event.
-            ctl.OnValueChanged(
+            control.OnStepValueChanged(
                 new ValueChangedEventArgs(NumericUpDown.ValueChangedEvent,
                     newValue));
         }
-
 
 
         public static readonly RoutedEvent ValueChangedEvent =
             EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Direct,
+                          typeof(ValueChangedEventHandler), typeof(NumericUpDown));
+
+        public static readonly RoutedEvent StepValueChangedEvent =
+            EventManager.RegisterRoutedEvent("StepValueChanged", RoutingStrategy.Bubble,
                           typeof(ValueChangedEventHandler), typeof(NumericUpDown));
 
         public event ValueChangedEventHandler ValueChanged
@@ -145,12 +161,26 @@ namespace Microwave_equipment_M2.Controls
             remove { RemoveHandler(ValueChangedEvent, value); }
         }
 
+        public event ValueChangedEventHandler StepValueChanged
+        {
+            add { AddHandler(StepValueChangedEvent, value); }
+            remove { RemoveHandler(StepValueChangedEvent, value); }
+        }
+
         protected virtual void OnValueChanged(ValueChangedEventArgs e)
         {
             // Raise the ValueChanged event so applications can be alerted
             // when Value changes.
             RaiseEvent(e);
         }
+
+        protected virtual void OnStepValueChanged(ValueChangedEventArgs e)
+        {
+            // Raise the StepValueChanged event so applications can be alerted
+            // when Value changes.
+            RaiseEvent(e);
+        }
+
 
         private void UpdateStates(bool useTransitions)
         {
@@ -208,19 +238,7 @@ namespace Microwave_equipment_M2.Controls
             }
         }
 
-        void downButtonElement_Click(object sender, RoutedEventArgs e)
-        {
-            int demoValue = Value - StepValue;
-
-            if (MinValue <= demoValue)
-            {
-                Value -= StepValue;
-            }
-            else
-            {
-                Value = MinValue;
-            }
-        }
+        void downButtonElement_Click(object sender, RoutedEventArgs e) => Value -= StepValue;
 
         private RepeatButton _upButtonElement;
 
@@ -248,19 +266,7 @@ namespace Microwave_equipment_M2.Controls
             }
         }
 
-        void upButtonElement_Click(object sender, RoutedEventArgs e)
-        {
-            int demoValue = Value + StepValue;
-
-            if (MaxValue >= demoValue)
-            {
-                Value += StepValue;
-            }
-            else
-            {
-                Value = MaxValue;
-            }
-        }
+        void upButtonElement_Click(object sender, RoutedEventArgs e) => Value += StepValue;
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {

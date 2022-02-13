@@ -172,8 +172,7 @@
                                               Margin="2"/>
 
                                     <controls:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-                                                            Margin="2" BorderBrush="Red" BorderThickness="2"
-                                                            MaxValue="10" MinValue="-10" ></controls:NumericUpDown>
+                                                            Margin="2" MaxValue="10" MinValue="-10"  ></controls:NumericUpDown>
                                 </Grid>
                                 
                             </Grid>
