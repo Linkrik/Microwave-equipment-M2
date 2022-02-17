@@ -70,39 +70,126 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20*"/>
-                            <RowDefinition Height="15*"/>
+                            <RowDefinition Height="20*"/>
                         </Grid.RowDefinitions>
 
                         <!-- Управление каналом -->
                         <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5" >
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="Канал" 
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.09*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+
+                                </Grid.RowDefinitions>
+
+                                <Viewbox>
+                                    <TextBlock Text="Канал" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
                                                Margin="5"></TextBlock>
-                                <Separator Background="Black" ></Separator>
-                                <ListView BorderBrush="Transparent" Background="Transparent">
-                                    <ListViewItem Height="30" Content="Сквозной" HorizontalContentAlignment="Center"></ListViewItem>
-                                    <ListViewItem Height="30" Content="Низкочастотный" HorizontalContentAlignment="Center"></ListViewItem>
-                                    <ListViewItem Height="30" Content="Усилительный" HorizontalContentAlignment="Center"></ListViewItem>
-                                    <ListViewItem Height="30" Content="УМ-40" HorizontalContentAlignment="Center"></ListViewItem>
-                                    <ListViewItem Height="30" Content="Запирание" HorizontalContentAlignment="Center"></ListViewItem>
-                                </ListView>
-                            </StackPanel>
+                                </Viewbox>
+
+                                <Separator Grid.Row="1" Background="Black" ></Separator>
+
+                                <Viewbox Grid.Row="2">
+                                    <Border Width="120">
+                                        <RadioButton GroupName="Сhannel" Content="Сквозной" Margin="5"></RadioButton>
+                                    </Border>
+                                </Viewbox>
+
+                                <Viewbox Grid.Row="3">
+                                    <Border Width="120">
+                                        <RadioButton GroupName="Сhannel" Content="Низкочастотный" Margin="5"></RadioButton>
+                                    </Border>
+                                </Viewbox>
+
+                                <Viewbox Grid.Row="4">
+                                    <Border Width="120">
+                                        <RadioButton GroupName="Сhannel" Content="Усилительный" Margin="5"></RadioButton>
+                                    </Border>
+                                </Viewbox>
+
+                                <Viewbox Grid.Row="5">
+                                    <Border Width="120">
+                                        <RadioButton GroupName="Сhannel" Content="УМ-40" Margin="5"></RadioButton>
+                                    </Border>
+                                </Viewbox>
+
+                                <Viewbox Grid.Row="6">
+                                    <Border Width="120">
+                                        <RadioButton GroupName="Сhannel" Content="Запирание" Margin="5"></RadioButton>
+                                    </Border>
+                                </Viewbox>
+
+                            </Grid>
                         </Border>
 
                         <!-- Управление SHDN -->
                         <Border Grid.Row="1"  Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5" >
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="SHDN" 
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.741*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox>
+                                    <TextBlock Text="SHDN" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
                                                Margin="5"></TextBlock>
-                                <Separator Background="Black" ></Separator>
-                                <ToggleButton Margin="2,2,2,0" Height="30" Content="12В"></ToggleButton>
-                                <ToggleButton Margin="2,2,2,0" Height="30" Content="5597"></ToggleButton>
-                                <ToggleButton Margin="2,2,2,0" Height="30" Content="460"></ToggleButton>
-                            </StackPanel>
+                                </Viewbox>
+                                <Separator Grid.Row="1" Background="Black" ></Separator>
+                                
+                                <ToggleButton Grid.Row="2" Margin="2">
+                                    <Viewbox>
+                                        <TextBlock Text="12В"></TextBlock>
+                                    </Viewbox>
+                                </ToggleButton>
+                                
+                                <ToggleButton Grid.Row="3" Margin="2">
+                                    <Viewbox>
+                                        <TextBlock Text="460"></TextBlock>
+                                    </Viewbox>
+                                </ToggleButton>
+                                
+                                <ToggleButton Grid.Row="4" Margin="2" >
+                                    <Viewbox>
+                                        <TextBlock Text="5597"></TextBlock>
+                                    </Viewbox>
+                                </ToggleButton>
+                                
+                                <Grid Grid.Row="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Viewbox  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Border Margin="2">
+                                            <TextBlock Text="__ __"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Border Margin="2">
+                                            <TextBlock  Text="℃"/>
+                                        </Border>
+                                    </Viewbox>
+                                    
+                                    
+                                    
+                                    
+                                </Grid>
+                            </Grid>
                         </Border>
                         
                     </Grid>
@@ -115,7 +202,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="15*"/>
+                            <RowDefinition Height="20*"/>
                             <RowDefinition Height="20*"/>
                         </Grid.RowDefinitions>
 
@@ -128,15 +215,18 @@
                             
                             <Grid >
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="0.2175*"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                
-                                <TextBlock Text="797 [1]"
+
+                                <Viewbox>
+                                    <TextBlock Text="797 [1]"
                                            Margin="5"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"/>
+                                </Viewbox>
+
                                 
                                 <Separator Grid.Row="1" Background="Black"></Separator>
                                 
@@ -145,43 +235,454 @@
                                         <ColumnDefinition Width="10*"/>
                                         <ColumnDefinition Width="8*"/>
                                         <ColumnDefinition Width="8*"/>
+                                        
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="5*"/>
                                         <RowDefinition Height="10*"/>
                                         <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="5*"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="SHDN" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ToggleButton Grid.Row="1" Margin="2" Content="Низкий"></ToggleButton>
-                                    <ToggleButton Grid.Row="2" Margin="2" Content="Высокий"></ToggleButton>
-
-                                    <TextBlock Grid.Column ="1"
-                                               Grid.ColumnSpan="2"
-                                               Text="ЦАП (В)"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"/>
-
-                                    <TextBlock Grid.Column ="1"
-                                               Grid.Row="2"
-                                               Text="Шаг (мВ):"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"/>
+                                    <Viewbox>
+                                        <Border Margin="2">
+                                            <TextBlock Text="SHDN"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
                                     
+                                    <ToggleButton Grid.Row="1" Margin="2" >
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </Viewbox>
+                                    </ToggleButton>
+                                    
+                                    <ToggleButton Grid.Row="2" Margin="2">
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </Viewbox>
+                                    </ToggleButton>
+
+                                    <Viewbox Grid.Column ="1" Grid.ColumnSpan="2">
+                                        <Border Margin="2">
+                                            <TextBlock Text="ЦАП 3 (В)"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Column ="1"  Grid.Row="2">
+                                        <Border Margin="2" >
+                                            <TextBlock Text="Шаг (мВ):"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <ComboBox Grid.Column="2" Grid.Row="2"
+                                              Margin="2">
+                                        
+                                    </ComboBox>
+
+                                        <controls:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
+                                                            Margin="2" MaxValue="-0.3" MinValue="-2" StepValue="0.1">
+                                        
+                                    </controls:NumericUpDown>
+
+                                    <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Border Margin="2">
+                                            <TextBlock Text="Температура:" ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="__ __"  ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Border Margin="2">
+                                            <TextBlock Text="℃" ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </Grid>
+                                
+                            </Grid>
+                           
+                        </Border>
+                        <!--#endregion-->
+
+                        <!--#region Нижняя ячейка-->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--#region ATT1 -->
+                            <Border BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Margin="5">
+
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.11*"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="6*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox>
+                                        <TextBlock Text="ATT1"
+                                           Margin="5"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                    </Viewbox>
+
+                                    <Separator Grid.Row="1" Background="Black"></Separator>
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition Height="1.5*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <CheckBox Content="16dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+                                        
+                                        <Viewbox Grid.Row="1">
+                                            <Border  Width="50">
+                                                <CheckBox Content="8dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+                                        
+                                        <Viewbox Grid.Row="2">
+                                            <Border  Width="50">
+                                                <CheckBox Content="4dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+                                        
+                                        <Viewbox Grid.Row="3">
+                                            <Border  Width="50">
+                                                <CheckBox Content="2dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+                                        
+                                        <Viewbox Grid.Row="4">
+                                            <Border  Width="50">
+                                                <CheckBox Content="1dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+                                        
+                                        <Viewbox Grid.Row="5">
+                                            <Border  Width="50">
+                                                <CheckBox Content="0.5dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <controls:NumericUpDown Grid.Row="6"
+                                                                Margin="2"
+                                                                MaxValue="63"
+                                                                MinValue="0"
+                                                                StepValue="0.5">
+                                            
+                                        </controls:NumericUpDown>
+
+                                    </Grid>
+                                </Grid >
+                            </Border>
+                            <!--#endregion -->
+
+                            <!--#region ATT2 -->
+                            <Border Grid.Column="1"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="5">
+
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.11*"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="6*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox>
+                                        <TextBlock Text="ATT2"
+                                           Margin="5"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                    </Viewbox>
+
+                                    <Separator Grid.Row="1" Background="Black"></Separator>
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition Height="1.5*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <CheckBox Content="16dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Row="1">
+                                            <Border  Width="50">
+                                                <CheckBox Content="8dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Row="2">
+                                            <Border  Width="50">
+                                                <CheckBox Content="4dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Row="3">
+                                            <Border  Width="50">
+                                                <CheckBox Content="2dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Row="4">
+                                            <Border  Width="50">
+                                                <CheckBox Content="1dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Row="5">
+                                            <Border  Width="50">
+                                                <CheckBox Content="0.5dB"></CheckBox>
+                                            </Border>
+                                        </Viewbox>
+
+                                        <controls:NumericUpDown Grid.Row="6"
+                                                                Margin="2"
+                                                                MaxValue="63"
+                                                                MinValue="0"
+                                                                StepValue="0.5">
+
+                                        </controls:NumericUpDown>
+
+                                    </Grid>
+                                </Grid >
+                            </Border>
+                            <!--#endregion-->
+
+                        </Grid>
+                        
+                        <!--#endregion-->    
+                        <!--#endregion-->
+
+                        <!--#region Колонка 3 / 3-->
+                        <!--#region Верхняя ячейка-->
+                        <Border Grid.Column="1"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Margin="5">
+
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.2175*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox>
+                                    <TextBlock Text="797 [2]"
+                                           Margin="5"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                </Viewbox>
+
+
+                                <Separator Grid.Row="1" Background="Black"></Separator>
+
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="8*"/>
+
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="5*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Viewbox>
+                                        <Border Margin="2">
+                                            <TextBlock Text="SHDN"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <ToggleButton Grid.Row="1" Margin="2" >
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </Viewbox>
+                                    </ToggleButton>
+
+                                    <ToggleButton Grid.Row="2" Margin="2">
+                                        <Viewbox>
+                                            <Border Width="50">
+                                                <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </Viewbox>
+                                    </ToggleButton>
+
+                                    <Viewbox Grid.Column ="1" Grid.ColumnSpan="2">
+                                        <Border Margin="2">
+                                            <TextBlock Text="ЦАП 4 (В)"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Column ="1"  Grid.Row="2">
+                                        <Border Margin="2" >
+                                            <TextBlock Text="Шаг (мВ):"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Viewbox>
+
                                     <ComboBox Grid.Column="2" Grid.Row="2"
                                               Margin="2"/>
 
                                     <controls:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-                                                            Margin="2" MaxValue="10" MinValue="-10"  ></controls:NumericUpDown>
+                                                            Margin="2" MaxValue="-0.3" MinValue="-2" StepValue="0.1">
+
+                                    </controls:NumericUpDown>
+
+                                    <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Border Margin="2">
+                                            <TextBlock Text="Температура:" ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="__ __"  ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Border Margin="2">
+                                            <TextBlock Text="℃" ></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </Grid>
+
+                            </Grid>
+
+                        </Border>
+                        <!--#endregion-->
+
+                        <!--#region Нижняя ячейка-->
+                        <Border Grid.Column="1"
+                                Grid.Row="1"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Margin="5">
+
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.1*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="6*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox >
+                                    <TextBlock Text="ATT3"
+                                           Margin="5"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                </Viewbox>
+
+                                <Separator Grid.Row="1" Background="Black"></Separator>
+                                
+                                <Grid Grid.Row="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Viewbox VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="Шаг (мВ)"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="ЦАП 1 (В)"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    
+
+                                    <ComboBox Grid.Row="1" Margin="2"></ComboBox>
+                                    <controls:NumericUpDown Grid.Row="1" Grid.Column="1" Margin="2">
+                                        
+                                    </controls:NumericUpDown>
+
+                                    <Viewbox Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="Шаг (мВ)"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <Viewbox Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Border Margin="2">
+                                            <TextBlock Text="ЦАП 2 (В)"/>
+                                        </Border>
+                                    </Viewbox>
+
+                                    <ComboBox Grid.Row="3" Margin="2"></ComboBox>
+                                    <controls:NumericUpDown Grid.Row="3" Grid.Column="1" Margin="2"></controls:NumericUpDown>
+
                                 </Grid>
                                 
                             </Grid>
-                            
                         </Border>
+
                         <!--#endregion-->
-                        
-                        
-                        
+
                         <!--#endregion-->
                         
                     </Grid>
