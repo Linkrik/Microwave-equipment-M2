@@ -48,57 +48,26 @@ namespace Microwave_equipment_M2.Controls
             DefaultStyleKey = typeof(NumericUpDown);
             this.IsTabStop = true;
         }
-
+        
+        #region Value property
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
-                "Value", typeof(int), typeof(NumericUpDown),
-                new PropertyMetadata(0,
+                "Value", typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(0.0m,
                     new PropertyChangedCallback(ValueChangedCallback),
                     new CoerceValueCallback(CoerceValue)));
 
-        public static readonly DependencyProperty MaxValueProperty =
-            DependencyProperty.Register(
-                "MaxValue", typeof(int), typeof(NumericUpDown),
-                new PropertyMetadata(int.MaxValue));
 
-        public static readonly DependencyProperty MinValueProperty =
-            DependencyProperty.Register(
-                "MinValue", typeof(int), typeof(NumericUpDown),
-                new PropertyMetadata(int.MinValue));
-
-        public static readonly DependencyProperty StepValueProperty =
-            DependencyProperty.Register(
-                "StepValue", typeof(int), typeof(NumericUpDown),
-                new PropertyMetadata(1));
-
-
-        public int Value
+        public decimal Value
         {
-            get => (int)GetValue(ValueProperty);
+            get => (decimal)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
-        public int MaxValue
-        {
-            get => (int)GetValue(MaxValueProperty);
-            set => SetValue(MaxValueProperty, value);
-        }
-
-        public int MinValue
-        {
-            get => (int)GetValue(MinValueProperty);
-            set => SetValue(MinValueProperty, value);
-        }
-
-        public int StepValue
-        {
-            get => (int)GetValue(StepValueProperty);
-            set => SetValue(StepValueProperty, value);
-        }
 
         private static object CoerceValue(DependencyObject element, object value)
         {
-            int newValue = (int)value;
+            decimal newValue = (decimal)value;
             NumericUpDown control = (NumericUpDown)element;
 
             newValue = Math.Max(control.MinValue, Math.Min(control.MaxValue, newValue));
@@ -107,101 +76,131 @@ namespace Microwave_equipment_M2.Controls
         }
 
 
-        private static object CoerceStepValue(DependencyObject element, object value)
-        {
-            int newValue = (int)value;
-            NumericUpDown control = (NumericUpDown)element;
-
-            newValue = Math.Max(1, newValue);
-
-            return newValue;
-        }
-
-
+        /// <summary>
+        /// ChangedCallback for Value
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="args"></param>
         private static void ValueChangedCallback(DependencyObject obj,
-            DependencyPropertyChangedEventArgs args)
+                                                 DependencyPropertyChangedEventArgs args)
         {
             NumericUpDown control = (NumericUpDown)obj;
-            int newValue = (int)args.NewValue;
 
             // Call UpdateStates because the Value might have caused the
             // control to change ValueStates.
-            control.UpdateStates(true);
+            //control.UpdateStates(true);
 
+            RoutedPropertyChangedEventArgs<decimal> e = new RoutedPropertyChangedEventArgs<decimal>(
+                (decimal)args.OldValue, (decimal)args.NewValue, ValueChangedEvent);
+            
             // Call OnValueChanged to raise the ValueChanged event.
-            control.OnValueChanged(
-                new ValueChangedEventArgs(NumericUpDown.ValueChangedEvent,
-                    newValue));
-        }
-
-        private static void StepValueChangedCallback(DependencyObject obj,
-            DependencyPropertyChangedEventArgs args)
-        {
-            NumericUpDown control = (NumericUpDown)obj;
-            int newValue = (int)args.NewValue;
-
-            // Call OnValueChanged to raise the ValueChanged event.
-            control.OnStepValueChanged(
-                new ValueChangedEventArgs(NumericUpDown.ValueChangedEvent,
-                    newValue));
+            control.OnValueChanged(e);
         }
 
 
-        public static readonly RoutedEvent ValueChangedEvent =
-            EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Direct,
-                          typeof(ValueChangedEventHandler), typeof(NumericUpDown));
-
-        public static readonly RoutedEvent StepValueChangedEvent =
-            EventManager.RegisterRoutedEvent("StepValueChanged", RoutingStrategy.Bubble,
-                          typeof(ValueChangedEventHandler), typeof(NumericUpDown));
-
-        public event ValueChangedEventHandler ValueChanged
-        {
-            add { AddHandler(ValueChangedEvent, value); }
-            remove { RemoveHandler(ValueChangedEvent, value); }
-        }
-
-        public event ValueChangedEventHandler StepValueChanged
-        {
-            add { AddHandler(StepValueChangedEvent, value); }
-            remove { RemoveHandler(StepValueChangedEvent, value); }
-        }
-
-        protected virtual void OnValueChanged(ValueChangedEventArgs e)
+        /// <summary>
+        /// Raises the ValueChanged event.
+        /// </summary>
+        /// <param name="args">Arguments associated with the ValueChanged event.</param>
+        protected virtual void OnValueChanged(RoutedPropertyChangedEventArgs<decimal> e)
         {
             // Raise the ValueChanged event so applications can be alerted
             // when Value changes.
             RaiseEvent(e);
         }
 
-        protected virtual void OnStepValueChanged(ValueChangedEventArgs e)
+
+        /// <summary>
+        /// Identifies the ValueChanged routed event.
+        /// </summary>
+        public static readonly RoutedEvent ValueChangedEvent =
+            EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, //RoutingStrategy.Direct
+                                             typeof(RoutedPropertyChangedEventHandler<decimal>),
+                                             typeof(NumericUpDown));
+
+
+        /// <summary>
+        /// Occurs when the Value property changes.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<decimal> ValueChanged
         {
-            // Raise the StepValueChanged event so applications can be alerted
-            // when Value changes.
-            RaiseEvent(e);
+            add { AddHandler(ValueChangedEvent, value); }
+            remove { RemoveHandler(ValueChangedEvent, value); }
+        }
+        #endregion
+
+        #region MaxValue property
+        public static readonly DependencyProperty MaxValueProperty =
+        DependencyProperty.Register(
+            "MaxValue", typeof(decimal), typeof(NumericUpDown),
+            new PropertyMetadata(decimal.MaxValue));
+
+
+        public decimal MaxValue
+        {
+            get => (decimal)GetValue(MaxValueProperty);
+            set => SetValue(MaxValueProperty, value);
+        }
+        #endregion
+
+        #region MinValue property
+        public static readonly DependencyProperty MinValueProperty =
+            DependencyProperty.Register(
+                "MinValue", typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(decimal.MinValue));
+        
+
+        public decimal MinValue
+        {
+            get => (decimal)GetValue(MinValueProperty);
+            set => SetValue(MinValueProperty, value);
+        }
+        #endregion
+
+        #region StepValue property
+        public static readonly DependencyProperty StepValueProperty =
+            DependencyProperty.Register(
+                "StepValue", typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(1.0m),
+                new ValidateValueCallback(ShirtValidateCallback));
+
+
+        public decimal StepValue
+        {
+            get => (decimal)GetValue(StepValueProperty);
+            set => SetValue(StepValueProperty, value);
         }
 
-
-        private void UpdateStates(bool useTransitions)
+        private static bool ShirtValidateCallback(object value)
         {
-            if (Value >= 0)
-            {
-                VisualStateManager.GoToState(this, "Positive", useTransitions);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, "Negative", useTransitions);
-            }
-
-            if (IsFocused)
-            {
-                VisualStateManager.GoToState(this, "Focused", useTransitions);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, "Unfocused", useTransitions);
-            }
+            decimal stepValue = (decimal)value;
+            return 0 < stepValue;
         }
+        #endregion
+
+
+        //----------------------------------------------------------------------
+
+        //private void UpdateStates(bool useTransitions)
+        //{
+        //    if (Value >= 0)
+        //    {
+        //        VisualStateManager.GoToState(this, "Positive", useTransitions);
+        //    }
+        //    else
+        //    {
+        //        VisualStateManager.GoToState(this, "Negative", useTransitions);
+        //    }
+
+        //    if (IsFocused)
+        //    {
+        //        VisualStateManager.GoToState(this, "Focused", useTransitions);
+        //    }
+        //    else
+        //    {
+        //        VisualStateManager.GoToState(this, "Unfocused", useTransitions);
+        //    }
+        //}
 
         public override void OnApplyTemplate()
         {
@@ -209,7 +208,7 @@ namespace Microwave_equipment_M2.Controls
             DownButtonElement = GetTemplateChild("DownButton") as RepeatButton;
             //TextElement = GetTemplateChild("TextBlock") as TextBlock;
 
-            UpdateStates(false);
+            //UpdateStates(false);
         }
 
         private RepeatButton _downButtonElement;
@@ -253,15 +252,13 @@ namespace Microwave_equipment_M2.Controls
             {
                 if (_upButtonElement != null)
                 {
-                    _upButtonElement.Click -=
-                        new RoutedEventHandler(upButtonElement_Click);
+                    _upButtonElement.Click -= new RoutedEventHandler(upButtonElement_Click);
                 }
                 _upButtonElement = value;
 
                 if (_upButtonElement != null)
                 {
-                    _upButtonElement.Click +=
-                        new RoutedEventHandler(upButtonElement_Click);
+                    _upButtonElement.Click += new RoutedEventHandler(upButtonElement_Click);
                 }
             }
         }
@@ -278,31 +275,15 @@ namespace Microwave_equipment_M2.Controls
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
-            UpdateStates(true);
+            //UpdateStates(true);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
         {
             base.OnLostFocus(e);
-            UpdateStates(true);
+            //UpdateStates(true);
+            //todo: Написать проверку на валидацию вводимого текста (Я думаю нужно использовать TryPars для проверки число это или нет)
         }
     }
 
-    public delegate void ValueChangedEventHandler(object sender, ValueChangedEventArgs e);
-
-    public class ValueChangedEventArgs : RoutedEventArgs
-    {
-        private int _value;
-
-        public ValueChangedEventArgs(RoutedEvent id, int num)
-        {
-            _value = num;
-            RoutedEvent = id;
-        }
-
-        public int Value
-        {
-            get { return _value; }
-        }
-    }
 }

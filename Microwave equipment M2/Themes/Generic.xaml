@@ -38,7 +38,7 @@
                                     when it has focus.-->
                                 <VisualState Name="Focused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" 
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextBlock" 
                                                                        Storyboard.TargetProperty="Visibility"
                                                                        Duration="0">
                                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -64,8 +64,8 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width = "10*"/>
-                                    <ColumnDefinition Width = "4*"/>
+                                    <ColumnDefinition Width = "2*"/>
+                                    <ColumnDefinition Width = "1*"/>
                                 </Grid.ColumnDefinitions>
 
 
