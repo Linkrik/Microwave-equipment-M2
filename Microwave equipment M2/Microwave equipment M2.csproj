@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <Folder Include="Views\Styles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome5" Version="2.1.6" />
   </ItemGroup>
 
 </Project>
