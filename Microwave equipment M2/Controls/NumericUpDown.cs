@@ -37,16 +37,17 @@ namespace Microwave_equipment_M2.Controls
     /// </summary>
     [TemplatePart(Name = "UpButtonElement", Type = typeof(RepeatButton))]
     [TemplatePart(Name = "DownButtonElement", Type = typeof(RepeatButton))]
-    [TemplateVisualState(Name = "Positive", GroupName = "ValueStates")]
-    [TemplateVisualState(Name = "Negative", GroupName = "ValueStates")]
-    [TemplateVisualState(Name = "Focused", GroupName = "FocusedStates")]
-    [TemplateVisualState(Name = "Unfocused", GroupName = "FocusedStates")]
+    //[TemplateVisualState(Name = "Positive", GroupName = "ValueStates")]
+    //[TemplateVisualState(Name = "Negative", GroupName = "ValueStates")]
+    //[TemplateVisualState(Name = "Focused", GroupName = "FocusedStates")]
+    //[TemplateVisualState(Name = "Unfocused", GroupName = "FocusedStates")]
     public class NumericUpDown : Control
     {
         public NumericUpDown()
         {
             DefaultStyleKey = typeof(NumericUpDown);
             this.IsTabStop = true;
+            
         }
         
         #region Value property
@@ -85,6 +86,16 @@ namespace Microwave_equipment_M2.Controls
                                                  DependencyPropertyChangedEventArgs args)
         {
             NumericUpDown control = (NumericUpDown)obj;
+
+            #region Run command
+            if (control.Command != null)
+            {
+                if (control.Command.CanExecute(control.Value))
+                {
+                    control.Command.Execute(control.Value);
+                }
+            }
+            #endregion
 
             // Call UpdateStates because the Value might have caused the
             // control to change ValueStates.
@@ -176,6 +187,30 @@ namespace Microwave_equipment_M2.Controls
             decimal stepValue = (decimal)value;
             return 0 < stepValue;
         }
+        #endregion
+
+        #region Command and CommandParameter property 
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(
+                "Command", typeof(ICommand), typeof(NumericUpDown));
+
+        public static readonly DependencyProperty CommandParameterProperty =
+           DependencyProperty.Register(
+               "CommandParameter", typeof(ICommand), typeof(NumericUpDown));
+
+
+        public ICommand Command
+        {
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
+        }
+
+        //public ICommand CommandParameter
+        //{
+        //    get => (ICommand)GetValue(CommandParameterProperty);
+        //    set => SetValue(CommandParameterProperty, value);
+        //}
+
         #endregion
 
 
