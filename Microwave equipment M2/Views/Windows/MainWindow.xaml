@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:Microwave_equipment_M2.View.Windows"
+        xmlns:fc="clr-namespace:Microwave_equipment_M2.Services"
         xmlns:vm ="clr-namespace:Microwave_equipment_M2.ViewModels"       
         xmlns:controls = "clr-namespace:Microwave_equipment_M2.Controls" 
         mc:Ignorable="d"
@@ -14,6 +16,10 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <fc:FontSizeConverter x:Key="fontSizeCon" />
+    </Window.Resources>
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -37,21 +43,53 @@
             <TabItem Header="Подключение">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="230"/>
                         <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="20*"/>
                         <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
                     
                     <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Настройка подключения" VerticalAlignment="Center"
-                                       HorizontalAlignment="Center" Margin="5"></TextBlock>
-                            <Separator Background="Black" />
-                            <TextBlock Text="Порт:" Margin="5,0,0,0"></TextBlock>
-                            <ComboBox Margin="5,0" Height="30"></ComboBox>
-                            <ToggleButton Content="Открыть" Margin="5,5,5,0" Height="30"></ToggleButton>
-                            <Button Content="Переподключить" Margin="5,5,5,0" Height="30"></Button>
-                        </StackPanel>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="1*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Viewbox>
+                                <TextBlock Text="Настройка подключения" 
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Margin="5"></TextBlock>
+                            </Viewbox>
+
+                            <Separator Grid.Row="1" Background="Black" ></Separator>
+
+                            <TextBlock Grid.Row="2" Text="IP:" Margin="5,5,5,0" FontSize="15"></TextBlock>
+                            <TextBox Grid.Row="3" Height="25" Margin="5" FontSize="15"></TextBox>
+                            <TextBlock Grid.Row="4" Text="Порт:" FontSize="15" Margin="5,5,5,0"></TextBlock>
+                            <TextBox Grid.Row="5" Height="25" Margin="5" FontSize="15"></TextBox>
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Height="30" Margin="5" ></ToggleButton>
+                                <TextBlock Grid.Column="1" Text="Подключиться"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="15"></TextBlock>
+                            </Grid>
+
+                        </Grid>
                     </Border>
                     
                 </Grid>
@@ -98,31 +136,46 @@
 
                                 <Viewbox Grid.Row="2">
                                     <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" Content="Сквозной" Margin="5"></RadioButton>
+                                        <RadioButton GroupName="Сhannel" 
+                                                     Content="Сквозной"
+                                                     Margin="5"
+                                                     IsChecked="{Binding ThroughChannel}"/>
                                     </Border>
                                 </Viewbox>
 
                                 <Viewbox Grid.Row="3">
                                     <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" Content="Низкочастотный" Margin="5"></RadioButton>
+                                        <RadioButton GroupName="Сhannel"
+                                                     Content="Низкочастотный"
+                                                     Margin="5"
+                                                     IsChecked="{Binding LowFrequencyChannel}"></RadioButton>
                                     </Border>
                                 </Viewbox>
 
                                 <Viewbox Grid.Row="4">
                                     <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" Content="Усилительный" Margin="5"></RadioButton>
+                                        <RadioButton GroupName="Сhannel"
+                                                     Content="Усилительный"
+                                                     Margin="5"
+                                                     IsChecked="{Binding AmplifyingChannel}"></RadioButton>
                                     </Border>
                                 </Viewbox>
 
                                 <Viewbox Grid.Row="5">
                                     <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" Content="УМ-40" Margin="5"></RadioButton>
+                                        <RadioButton GroupName="Сhannel" 
+                                                     Content="УМ-40" 
+                                                     Margin="5"
+                                                     IsChecked="{Binding UM40Channel}"></RadioButton>
                                     </Border>
                                 </Viewbox>
 
                                 <Viewbox Grid.Row="6">
                                     <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" Content="Запирание" Margin="5"></RadioButton>
+                                        <RadioButton GroupName="Сhannel" 
+                                                     Content="Запирание" 
+                                                     Margin="5"
+                                                     IsChecked="{Binding LockingChannel}"></RadioButton>
                                     </Border>
                                 </Viewbox>
 
@@ -149,19 +202,19 @@
                                 </Viewbox>
                                 <Separator Grid.Row="1" Background="Black" ></Separator>
                                 
-                                <ToggleButton Grid.Row="2" Margin="2">
+                                <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN12V}">
                                     <Viewbox>
                                         <TextBlock Text="12В"></TextBlock>
                                     </Viewbox>
                                 </ToggleButton>
                                 
-                                <ToggleButton Grid.Row="3" Margin="2">
+                                <ToggleButton Grid.Row="3" Margin="2" IsChecked="{Binding SHDN460}">
                                     <Viewbox>
                                         <TextBlock Text="460"></TextBlock>
                                     </Viewbox>
                                 </ToggleButton>
                                 
-                                <ToggleButton Grid.Row="4" Margin="2" >
+                                <ToggleButton Grid.Row="4" Margin="2" IsChecked="{Binding SHDN5597}">
                                     <Viewbox>
                                         <TextBlock Text="5597"></TextBlock>
                                     </Viewbox>
@@ -175,7 +228,7 @@
 
                                     <Viewbox  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
-                                            <TextBlock Text="__ __"/>
+                                            <TextBlock Text="{Binding TemperatureShdn5597, TargetNullValue=__ __}"/>
                                         </Border>
                                     </Viewbox>
 
@@ -252,7 +305,7 @@
                                         </Border>
                                     </Viewbox>
                                     
-                                    <ToggleButton Grid.Row="1" Margin="2" >
+                                    <ToggleButton Grid.Row="1" Margin="2" IsChecked="{Binding SHDN7971Low}">
                                         <Viewbox>
                                             <Border Width="50">
                                                 <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
@@ -260,7 +313,7 @@
                                         </Viewbox>
                                     </ToggleButton>
                                     
-                                    <ToggleButton Grid.Row="2" Margin="2">
+                                    <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN7971High}">
                                         <Viewbox>
                                             <Border Width="50">
                                                 <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
@@ -284,17 +337,88 @@
                                         </Border>
                                     </Viewbox>
 
-                                    <ComboBox Grid.Column="2" Grid.Row="2"
-                                              Margin="2">
-                                        
-                                    </ComboBox>
+                                    <Border Margin="2" Grid.Column="2" Grid.Row="2" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
+                                        <Grid>
+                                            <TextBox 
+                                                x:Name="StepDAC3"
+                                                Margin="2"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[2].Step}" BorderBrush="Transparent" Padding="2"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=StepDAC3}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+                                        </Grid>
+                                    </Border>
 
-                                        <controls:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-                                                            Margin="2" MaxValue="-0.3" MinValue="-2" StepValue="0.1">
-                                        
-                                    </controls:NumericUpDown>
+                                    
+                                    <!--#region DAC 3-->
+                                        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="10*"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
 
-                                    <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
+
+                                            <TextBox 
+                                                x:Name="DAC3"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[2].Value}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=DAC3}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+
+                                                <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                              Command="{Binding UpButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[2]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+
+                                                <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                              Command="{Binding DownButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[2]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+                                            </Grid>
+                                        </Border>
+
+                                    <!--#endregion-->
+
+
+                                        <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
                                             <TextBlock Text="Температура:" ></TextBlock>
                                         </Border>
@@ -302,7 +426,7 @@
 
                                     <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="__ __"  ></TextBlock>
+                                            <TextBlock Text="{Binding Temperature7971, TargetNullValue=__ __}"  ></TextBlock>
                                         </Border>
                                     </Viewbox>
 
@@ -360,47 +484,95 @@
 
                                         <Viewbox>
                                             <Border Width="50">
-                                                <CheckBox Content="16dB"></CheckBox>
+                                                <CheckBox Content="16dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin5}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="1">
                                             <Border  Width="50">
-                                                <CheckBox Content="8dB"></CheckBox>
+                                                <CheckBox Content="8dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin4}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="2">
                                             <Border  Width="50">
-                                                <CheckBox Content="4dB"></CheckBox>
+                                                <CheckBox Content="4dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin3}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="3">
                                             <Border  Width="50">
-                                                <CheckBox Content="2dB"></CheckBox>
+                                                <CheckBox Content="2dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin2}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="4">
                                             <Border  Width="50">
-                                                <CheckBox Content="1dB"></CheckBox>
+                                                <CheckBox Content="1dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin1}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="5">
                                             <Border  Width="50">
-                                                <CheckBox Content="0.5dB"></CheckBox>
+                                                <CheckBox Content="0.5dB"
+                                                          IsChecked="{Binding Attenuators[0].Pin0}"/>
                                             </Border>
                                         </Viewbox>
 
-                                        <controls:NumericUpDown Grid.Row="6"
-                                                                Margin="2"
-                                                                MaxValue="63"
-                                                                MinValue="0"
-                                                                StepValue="0.5">
-                                            
-                                        </controls:NumericUpDown>
+                                        <Border Grid.Row="6" Margin="3">
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="10*"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                </Grid.ColumnDefinitions>
+
+
+                                                <TextBox 
+                                                    x:Name="Att1"
+                                                    Grid.Column="1"
+                                                         FontSize="{Binding Path=ActualHeight,
+                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                    AncestorType=Grid},
+                                                                    Converter={StaticResource fontSizeCon}}"
+                                                         HorizontalContentAlignment="Center"
+                                                         VerticalContentAlignment="Center"
+                                                         Text="{Binding Attenuators[0].Value}">
+                                                    <TextBox.InputBindings>
+                                                        <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=Att1}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                    </TextBox.InputBindings>
+                                                </TextBox>
+
+                                                <RepeatButton Grid.Column="2" 
+                                                              Command="{Binding UpButtonAttCommand}"
+                                                              CommandParameter="{Binding Attenuators[0]}">
+
+                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                                </RepeatButton>
+
+                                                <RepeatButton Grid.Column="0" 
+                                                              Command="{Binding DownButtonAttCommand}"
+                                                              CommandParameter="{Binding Attenuators[0]}">
+
+                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                                </RepeatButton>
+                                            </Grid>
+                                        </Border>
 
                                     </Grid>
                                 </Grid >
@@ -443,47 +615,97 @@
 
                                         <Viewbox>
                                             <Border Width="50">
-                                                <CheckBox Content="16dB"></CheckBox>
+                                                <CheckBox Content="16dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin5}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="1">
                                             <Border  Width="50">
-                                                <CheckBox Content="8dB"></CheckBox>
+                                                <CheckBox Content="8dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin4}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="2">
                                             <Border  Width="50">
-                                                <CheckBox Content="4dB"></CheckBox>
+                                                <CheckBox Content="4dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin3}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="3">
                                             <Border  Width="50">
-                                                <CheckBox Content="2dB"></CheckBox>
+                                                <CheckBox Content="2dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin2}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="4">
                                             <Border  Width="50">
-                                                <CheckBox Content="1dB"></CheckBox>
+                                                <CheckBox Content="1dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin1}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="5">
                                             <Border  Width="50">
-                                                <CheckBox Content="0.5dB"></CheckBox>
+                                                <CheckBox Content="0.5dB"
+                                                          IsChecked="{Binding Attenuators[1].Pin0}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
-                                        <controls:NumericUpDown Grid.Row="6"
-                                                                Margin="2"
-                                                                MaxValue="63"
-                                                                MinValue="0"
-                                                                StepValue="0.5">
+                                        <Border Grid.Row="6" Margin="3">
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="10*"/>
+                                                    <ColumnDefinition Width="5*"/>
 
-                                        </controls:NumericUpDown>
+                                                </Grid.ColumnDefinitions>
+
+
+                                                <TextBox
+                                                    x:Name="Att2"
+                                                    Grid.Column="1"
+                                                         Grid.Row="0"
+                                                         FontSize="{Binding Path=ActualHeight,
+                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                    AncestorType=Grid},
+                                                                    Converter={StaticResource fontSizeCon}}"
+                                                         HorizontalContentAlignment="Center"
+                                                         VerticalContentAlignment="Center"
+                                                         Text="{Binding Attenuators[1].Value}">
+                                                    <TextBox.InputBindings>
+                                                        <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=Att2}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                    </TextBox.InputBindings>
+                                                </TextBox>
+
+                                                <RepeatButton Grid.Column="2" 
+                                                              Command="{Binding UpButtonAttCommand}"
+                                                              CommandParameter="{Binding Attenuators[1]}">
+
+                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                                </RepeatButton>
+
+                                                <RepeatButton Grid.Column="0" 
+                                                              Command="{Binding DownButtonAttCommand}"
+                                                              CommandParameter="{Binding Attenuators[1]}">
+
+                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                                </RepeatButton>
+                                            </Grid>
+                                        </Border>
 
                                     </Grid>
                                 </Grid >
@@ -542,7 +764,7 @@
                                         </Border>
                                     </Viewbox>
 
-                                    <ToggleButton Grid.Row="1" Margin="2" >
+                                    <ToggleButton Grid.Row="1" Margin="2" IsChecked="{Binding SHDN7972Low}">
                                         <Viewbox>
                                             <Border Width="50">
                                                 <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
@@ -550,7 +772,7 @@
                                         </Viewbox>
                                     </ToggleButton>
 
-                                    <ToggleButton Grid.Row="2" Margin="2">
+                                    <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN7972High}">
                                         <Viewbox>
                                             <Border Width="50">
                                                 <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
@@ -574,14 +796,86 @@
                                         </Border>
                                     </Viewbox>
 
-                                    <ComboBox Grid.Column="2" Grid.Row="2"
-                                              Margin="2"/>
+                                    <!--#region Step DAC 4-->
+                                    <Border Margin="2" Grid.Column="2" Grid.Row="2" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
+                                        <Grid>
+                                            <TextBox
+                                                x:Name="StepDAC4"
+                                                Margin="2"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[3].Step}" BorderBrush="Transparent" Padding="2"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=StepDAC4}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+                                        </Grid>
+                                    </Border>
+                                    <!--#endregion-->
 
-                                    <controls:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
-                                                            Margin="2" MaxValue="-0.3" MinValue="-2" StepValue="0.1">
+                                    <!--#region DAC 4-->
+                                    <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
 
-                                    </controls:NumericUpDown>
 
+                                            <TextBox 
+                                                x:Name="DAC4"  
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[3].Value}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=DAC4}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                              Command="{Binding UpButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[3]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                              Command="{Binding DownButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[3]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+                                        </Grid>
+                                    </Border>
+                                    <!--#endregion-->
+                                    
                                     <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
                                             <TextBlock Text="Температура:" ></TextBlock>
@@ -590,7 +884,7 @@
 
                                     <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="__ __"  ></TextBlock>
+                                            <TextBlock Text="{Binding Temperature7972, TargetNullValue=__ __}"  ></TextBlock>
                                         </Border>
                                     </Viewbox>
 
@@ -654,12 +948,83 @@
                                         </Border>
                                     </Viewbox>
 
-                                    
 
-                                    <ComboBox Grid.Row="1" Margin="2"></ComboBox>
-                                    <controls:NumericUpDown Grid.Row="1" Grid.Column="1" Margin="2">
-                                        
-                                    </controls:NumericUpDown>
+
+                                    <Border Margin="2" Grid.Column="0" Grid.Row="1" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
+                                        <Grid>
+                                            <TextBox 
+                                                x:Name="StepDAC1"
+                                                Margin="2"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[0].Step}" BorderBrush="Transparent" Padding="2"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=StepDAC1}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+
+                                            <TextBox
+                                                x:Name="DAC1"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[0].Value}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=DAC1}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                              Command="{Binding UpButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[0]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                              Command="{Binding DownButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[0]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+                                        </Grid>
+                                    </Border>
 
                                     <Viewbox Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                         <Border Margin="2">
@@ -673,8 +1038,80 @@
                                         </Border>
                                     </Viewbox>
 
-                                    <ComboBox Grid.Row="3" Margin="2"></ComboBox>
-                                    <controls:NumericUpDown Grid.Row="3" Grid.Column="1" Margin="2"></controls:NumericUpDown>
+                                    <Border Margin="2" Grid.Column="0" Grid.Row="3" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
+                                        <Grid>
+                                            <TextBox x:Name="StepDAC2" 
+                                                Margin="2"
+                                                     HorizontalContentAlignment="Center"
+                                                     VerticalContentAlignment="Center"
+                                                     Text="{Binding Dacs[1].Step}" BorderBrush="Transparent" Padding="2"
+                                                     FontSize="{Binding Path=ActualHeight,
+                                                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=Grid},
+                                                                Converter={StaticResource fontSizeCon}}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=StepDAC2}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="2">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+
+                                            <TextBox 
+                                                x:Name="DAC2"  
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                FontSize="{Binding Path=ActualHeight,
+                                                           RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                           AncestorType=Grid},
+                                                           Converter={StaticResource fontSizeCon}}"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Text="{Binding Dacs[1].Value}">
+                                                <TextBox.InputBindings>
+                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                CommandParameter="{Binding ElementName=DAC2}"
+                                                                Gesture="Enter"  ></KeyBinding>
+                                                </TextBox.InputBindings>
+                                            </TextBox>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                              Command="{Binding UpButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[1]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+
+                                            <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                              Command="{Binding DownButtonDacCommand}"
+                                                              CommandParameter="{Binding Dacs[1]}">
+
+                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  Foreground="Black" />
+
+                                            </RepeatButton>
+                                        </Grid>
+                                    </Border>
 
                                 </Grid>
                                 
