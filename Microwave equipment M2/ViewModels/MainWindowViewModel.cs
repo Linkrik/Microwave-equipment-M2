@@ -4,6 +4,7 @@ using Microwave_equipment_M2.ViewModels.Base;
 
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -195,6 +196,49 @@ namespace Microwave_equipment_M2.ViewModels
         }
 
         #endregion
+
+        #region Socket
+        #region IP address
+
+        public IPEndPoint IPPoint { get => new IPEndPoint(ipAddress, port); }
+
+
+        private IPAddress ipAddress = IPAddress.Parse("192.168.0.1");
+        public string IpAddress
+        {
+            get => Convert.ToString(ipAddress);
+            set
+            {
+                IPAddress newValue;
+                if (!IPAddress.TryParse(value, out newValue))
+                {
+                    newValue = ipAddress;
+                }
+                Set(ref ipAddress, newValue);
+            }
+        }
+
+        #endregion IP address
+
+        #region Port
+
+        private int port = 5025;
+        public string Port
+        {
+            get => Convert.ToString(port);
+            set
+            {
+                int newValue;
+                if (!int.TryParse(value, out newValue))
+                {
+                    newValue = port;
+                }
+                Set(ref port, newValue);
+            }
+        }
+
+        #endregion Port
+        #endregion Socket
 
         public ObservableCollection<Dac> Dacs { get; set; }
         public ObservableCollection<Attenuator> Attenuators { get; set; }

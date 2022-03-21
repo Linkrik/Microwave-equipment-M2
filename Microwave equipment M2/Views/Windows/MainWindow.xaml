@@ -21,7 +21,7 @@
     </Window.Resources>
     
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Height="0">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}" />
             </MenuItem>
@@ -74,9 +74,23 @@
                             <Separator Grid.Row="1" Background="Black" ></Separator>
 
                             <TextBlock Grid.Row="2" Text="IP:" Margin="5,5,5,0" FontSize="15"></TextBlock>
-                            <TextBox Grid.Row="3" Height="25" Margin="5" FontSize="15"></TextBox>
+                            
+                            <TextBox Grid.Row="3"
+                                     Height="25"
+                                     Margin="5"
+                                     FontSize="15"
+                                     Text="{Binding IpAddress}"
+                                     MaxLength="15"></TextBox>
+                            
                             <TextBlock Grid.Row="4" Text="Порт:" FontSize="15" Margin="5,5,5,0"></TextBlock>
-                            <TextBox Grid.Row="5" Height="25" Margin="5" FontSize="15"></TextBox>
+                            
+                            <TextBox Grid.Row="5"
+                                     Height="25"
+                                     Margin="5"
+                                     FontSize="15"
+                                     MaxLength="5"
+                                     Text="{Binding Port}"></TextBox>
+                            
                             <Grid Grid.Row="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
@@ -164,7 +178,7 @@
                                 <Viewbox Grid.Row="5">
                                     <Border Width="120">
                                         <RadioButton GroupName="Сhannel" 
-                                                     Content="УМ-40" 
+                                                     Content="Умножитель" 
                                                      Margin="5"
                                                      IsChecked="{Binding UM40Channel}"></RadioButton>
                                     </Border>
