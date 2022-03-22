@@ -7,7 +7,6 @@
         xmlns:local="clr-namespace:Microwave_equipment_M2.View.Windows"
         xmlns:fc="clr-namespace:Microwave_equipment_M2.Services"
         xmlns:vm ="clr-namespace:Microwave_equipment_M2.ViewModels"       
-        xmlns:controls = "clr-namespace:Microwave_equipment_M2.Controls" 
         mc:Ignorable="d"
         Title="{Binding Title}"
         Height="450" MinHeight="450" Width="610" MinWidth="610">
@@ -37,10 +36,10 @@
                 <TextBlock Text="{Binding Status}"/>
             </StatusBarItem>
         </StatusBar>
-        <TabControl>
+        <TabControl Style="{DynamicResource TabControlStyle}">
             
             <!-- Окно подключения к модулю -->
-            <TabItem Header="Подключение">
+            <TabItem Header="Подключение" Style="{DynamicResource TabItemStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="230"/>
@@ -48,9 +47,9 @@
                         <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                    <Border Style="{DynamicResource BorderGroupStyle}">
 
-                        <Grid>
+                        <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45"/>
                                 <RowDefinition Height="Auto"/>
@@ -64,44 +63,51 @@
 
                             </Grid.RowDefinitions>
 
-                            <Viewbox>
-                                <TextBlock Text="Настройка подключения" 
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Margin="5"></TextBlock>
-                            </Viewbox>
+                            <Border Style="{DynamicResource BorderHedarStyle}">
+                                <Viewbox>
+                                    <TextBlock Text="Настройка подключения" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                </Viewbox>
+                            </Border>
 
-                            <Separator Grid.Row="1" Background="Black" ></Separator>
+                            <TextBlock Grid.Row="2"
+                                       Text="IP:"
+                                       Margin="5,5,5,0" 
+                                       Style="{DynamicResource TextCommonStyle}"/>
 
-                            <TextBlock Grid.Row="2" Text="IP:" Margin="5,5,5,0" FontSize="15"></TextBlock>
-                            
                             <TextBox Grid.Row="3"
                                      Height="25"
                                      Margin="5"
                                      FontSize="15"
                                      Text="{Binding IpAddress}"
                                      MaxLength="15"></TextBox>
-                            
-                            <TextBlock Grid.Row="4" Text="Порт:" FontSize="15" Margin="5,5,5,0"></TextBlock>
-                            
+
+                            <TextBlock Grid.Row="4"
+                                       Text="Порт:"
+                                       Margin="5,5,5,0"
+                                       Style="{DynamicResource TextCommonStyle}"/>
+
                             <TextBox Grid.Row="5"
                                      Height="25"
                                      Margin="5"
                                      FontSize="15"
                                      MaxLength="5"
                                      Text="{Binding Port}"></TextBox>
-                            
-                            <Grid Grid.Row="6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton Height="30" Margin="5" ></ToggleButton>
-                                <TextBlock Grid.Column="1" Text="Подключиться"
+
+                            <Border Grid.Row="6" Style="{DynamicResource BorderHedarStyle}">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ToggleButton Height="30" Margin="5" Style="{DynamicResource ToggleButtonStyle}"/>
+                                    <TextBlock Grid.Column="1" Text="Подключиться"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           FontSize="15"></TextBlock>
-                            </Grid>
+                                           FontSize="15"
+                                           Style="{DynamicResource TextCommonStyle}"></TextBlock>
+                                </Grid>
+                            </Border>
 
                         </Grid>
                     </Border>
@@ -110,7 +116,7 @@
             </TabItem>
 
             <!-- Окно управления модулем -->
-            <TabItem Header="Управление">
+            <TabItem Header="Управление" Style="{DynamicResource TabItemStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10*"/>
@@ -126,7 +132,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Управление каналом -->
-                        <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5" >
+                        <Border Margin="5" Style="{DynamicResource BorderGroupStyle}" >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1.09*"/>
@@ -139,65 +145,83 @@
 
                                 </Grid.RowDefinitions>
 
-                                <Viewbox>
-                                    <TextBlock Text="Канал" 
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Margin="5"></TextBlock>
-                                </Viewbox>
+                                <Border Style="{DynamicResource BorderHedarStyle}">
+                                    <Viewbox>
+                                        <TextBlock Text="Канал" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                    </Viewbox>
+                                </Border>
 
-                                <Separator Grid.Row="1" Background="Black" ></Separator>
+                                <RadioButton Grid.Row="2" 
+                                             GroupName="Сhannel" 
+                                             IsChecked="{Binding ThroughChannel}"
+                                             Style="{DynamicResource RadioButtonStyle}">
+                                    <Viewbox>
+                                        <Border Width="120">
+                                            <TextBlock Text="Сквозной"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </RadioButton>
 
-                                <Viewbox Grid.Row="2">
-                                    <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" 
-                                                     Content="Сквозной"
-                                                     Margin="5"
-                                                     IsChecked="{Binding ThroughChannel}"/>
-                                    </Border>
-                                </Viewbox>
+                                <RadioButton Grid.Row="3"
+                                             GroupName="Сhannel"
+                                             IsChecked="{Binding LowFrequencyChannel}"
+                                             Style="{DynamicResource RadioButtonStyle}">
+                                    <Viewbox>
+                                        <Border Width="120">
+                                            <TextBlock Text="Низкочастотный"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </RadioButton>
 
-                                <Viewbox Grid.Row="3">
-                                    <Border Width="120">
-                                        <RadioButton GroupName="Сhannel"
-                                                     Content="Низкочастотный"
-                                                     Margin="5"
-                                                     IsChecked="{Binding LowFrequencyChannel}"></RadioButton>
-                                    </Border>
-                                </Viewbox>
+                                <RadioButton Grid.Row="4" 
+                                             GroupName="Сhannel"
+                                             IsChecked="{Binding AmplifyingChannel}"
+                                             Style="{DynamicResource RadioButtonStyle}">
+                                    <Viewbox>
+                                        <Border Width="120">
+                                            <TextBlock Text="Усилительный"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </RadioButton>
 
-                                <Viewbox Grid.Row="4">
-                                    <Border Width="120">
-                                        <RadioButton GroupName="Сhannel"
-                                                     Content="Усилительный"
-                                                     Margin="5"
-                                                     IsChecked="{Binding AmplifyingChannel}"></RadioButton>
-                                    </Border>
-                                </Viewbox>
+                                <RadioButton Grid.Row="5" 
+                                             GroupName="Сhannel" 
+                                             IsChecked="{Binding UM40Channel}"
+                                             Style="{DynamicResource RadioButtonStyle}">
+                                    <Viewbox>
+                                        <Border Width="120">
+                                            <TextBlock Text="Умножитель"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </RadioButton>
 
-                                <Viewbox Grid.Row="5">
-                                    <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" 
-                                                     Content="Умножитель" 
-                                                     Margin="5"
-                                                     IsChecked="{Binding UM40Channel}"></RadioButton>
-                                    </Border>
-                                </Viewbox>
-
-                                <Viewbox Grid.Row="6">
-                                    <Border Width="120">
-                                        <RadioButton GroupName="Сhannel" 
-                                                     Content="Запирание" 
-                                                     Margin="5"
-                                                     IsChecked="{Binding LockingChannel}"></RadioButton>
-                                    </Border>
-                                </Viewbox>
+                                <RadioButton Grid.Row="6" 
+                                             GroupName="Сhannel" 
+                                             IsChecked="{Binding LockingChannel}"
+                                             Style="{DynamicResource RadioButtonStyle}">
+                                    <Viewbox>
+                                        <Border Width="120">
+                                            <TextBlock Text="Запирание"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+                                </RadioButton>
 
                             </Grid>
                         </Border>
 
                         <!-- Управление SHDN -->
-                        <Border Grid.Row="1"  Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="5" >
+                        <Border Grid.Row="1"  Style="{DynamicResource BorderGroupStyle}" >
                             <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.741*"/>
@@ -208,31 +232,81 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Viewbox>
-                                    <TextBlock Text="SHDN" 
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Margin="5"></TextBlock>
-                                </Viewbox>
-                                <Separator Grid.Row="1" Background="Black" ></Separator>
-                                
-                                <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN12V}">
+                                <Border Style="{DynamicResource BorderHedarStyle}">
                                     <Viewbox>
-                                        <TextBlock Text="12В"></TextBlock>
+                                        <TextBlock Text="SHDN" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
                                     </Viewbox>
-                                </ToggleButton>
-                                
-                                <ToggleButton Grid.Row="3" Margin="2" IsChecked="{Binding SHDN460}">
-                                    <Viewbox>
-                                        <TextBlock Text="460"></TextBlock>
-                                    </Viewbox>
-                                </ToggleButton>
-                                
-                                <ToggleButton Grid.Row="4" Margin="2" IsChecked="{Binding SHDN5597}">
-                                    <Viewbox>
-                                        <TextBlock Text="5597"></TextBlock>
-                                    </Viewbox>
-                                </ToggleButton>
+                                </Border>
+
+                                <!--#region SHDN 12V-->
+                                <Border Grid.Row="2" Style="{DynamicResource BorderHedarStyle}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Viewbox Margin="2">
+                                            <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN12V}"/>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Column="1" Margin="2">
+                                            <TextBlock Text="12V"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Viewbox>
+                                    </Grid>
+                                </Border>
+                                <!--#endregion SHDN 12V-->
+
+                                <!--#region SHDN 460-->
+                                <Border Grid.Row="3" Style="{DynamicResource BorderHedarStyle}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Viewbox Margin="2">
+                                            <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN460}"/>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Column="1" Margin="2">
+                                            <TextBlock Text="460"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Viewbox>
+                                    </Grid>
+                                </Border>
+                                <!--#endregion SHDN 460-->
+
+                                <!--#region SHDN 5597-->
+                                <Border Grid.Row="4" Style="{DynamicResource BorderHedarStyle}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Viewbox Margin="2">
+                                            <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN5597}"/>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Column="1" Margin="2">
+                                            <TextBlock Text="5597"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Viewbox>
+                                    </Grid>
+                                </Border>
+                                <!--#endregion SHDN 5597-->
                                 
                                 <Grid Grid.Row="5">
                                     <Grid.ColumnDefinitions>
@@ -242,13 +316,15 @@
 
                                     <Viewbox  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
-                                            <TextBlock Text="{Binding TemperatureShdn5597, TargetNullValue=__ __}"/>
+                                            <TextBlock Text="{Binding TemperatureShdn5597, TargetNullValue=__ __}"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Border Margin="2">
-                                            <TextBlock  Text="℃"/>
+                                            <TextBlock  Text="℃"
+                                                        Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
                                     
@@ -275,10 +351,7 @@
 
                         <!--#region Колонка 2 / 3-->
                         <!--#region Верхняя ячейка-->
-                        <Border BorderBrush="Black"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Margin="5">
+                        <Border Style="{DynamicResource BorderGroupStyle}">
                             
                             <Grid >
                                 <Grid.RowDefinitions>
@@ -287,15 +360,14 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Viewbox>
-                                    <TextBlock Text="797 [1]"
-                                           Margin="5"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
-                                </Viewbox>
+                                <Border Style="{DynamicResource BorderHedarStyle}">
+                                    <Viewbox>
+                                        <TextBlock Text="797[1]" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                    </Viewbox>
+                                </Border>
 
-                                
-                                <Separator Grid.Row="1" Background="Black"></Separator>
+                               
                                 
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
@@ -315,31 +387,61 @@
                                         <Border Margin="2">
                                             <TextBlock Text="SHDN"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
-                                    
-                                    <ToggleButton Grid.Row="1" Margin="2" IsChecked="{Binding SHDN7971Low}">
-                                        <Viewbox>
-                                            <Border Width="50">
-                                                <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </Viewbox>
-                                    </ToggleButton>
-                                    
-                                    <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN7971High}">
-                                        <Viewbox>
-                                            <Border Width="50">
-                                                <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </Viewbox>
-                                    </ToggleButton>
+
+                                    <Border Grid.Row="1" Style="{DynamicResource BorderHedarStyle}">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Viewbox Margin="2">
+                                                <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN7971Low}"/>
+                                            </Viewbox>
+
+                                            <Viewbox Grid.Column="1" Margin="2">
+                                                <TextBlock Text="Низкий"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
+
+
+
+                                    <Border Grid.Row="2" Style="{DynamicResource BorderHedarStyle}">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Viewbox Margin="2">
+                                                <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN7971High}"/>
+                                            </Viewbox>
+
+                                            <Viewbox Grid.Column="1" Margin="2">
+                                                <TextBlock Text="Высокий"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
 
                                     <Viewbox Grid.Column ="1" Grid.ColumnSpan="2">
                                         <Border Margin="2">
                                             <TextBlock Text="ЦАП 3 (В)"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
@@ -347,30 +449,23 @@
                                         <Border Margin="2" >
                                             <TextBlock Text="Шаг (мВ):"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
-                                    <Border Margin="2" Grid.Column="2" Grid.Row="2" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
-                                        <Grid>
                                             <TextBox 
+                                                Grid.Column="2" Grid.Row="2"
+                                                Style="{DynamicResource TextBoxStepDACStyle}"
                                                 x:Name="StepDAC3"
-                                                Margin="2"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
-                                                Text="{Binding Dacs[2].Step}" BorderBrush="Transparent" Padding="2"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}">
+                                                Text="{Binding Dacs[2].Step}" >
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC3}"
                                                                 Gesture="Enter"  ></KeyBinding>
                                                 </TextBox.InputBindings>
                                             </TextBox>
-                                        </Grid>
-                                    </Border>
+
 
                                     
                                     <!--#region DAC 3-->
@@ -386,47 +481,30 @@
                                                 </Grid.RowDefinitions>
 
 
-                                            <TextBox 
-                                                x:Name="DAC3"
-                                                Grid.RowSpan="2"
-                                                Grid.Column="0"
-                                                Grid.Row="0"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
-                                                Text="{Binding Dacs[2].Value}">
-                                                <TextBox.InputBindings>
-                                                    <KeyBinding Command="{Binding EnterValueCommand}"
-                                                                CommandParameter="{Binding ElementName=DAC3}"
-                                                                Gesture="Enter"  ></KeyBinding>
-                                                </TextBox.InputBindings>
-                                            </TextBox>
+                                                <TextBox 
+                                                    x:Name="DAC3"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    Grid.Row="0"
+                                                    Style="{DynamicResource TextBoxDACStyle}"
+                                                    Text="{Binding Dacs[2].Value}">
+                                                    <TextBox.InputBindings>
+                                                        <KeyBinding Command="{Binding EnterValueCommand}"
+                                                                    CommandParameter="{Binding ElementName=DAC3}"
+                                                                    Gesture="Enter"  ></KeyBinding>
+                                                    </TextBox.InputBindings>
+                                                </TextBox>
 
-                                                <RepeatButton Grid.Column="1" Grid.Row="0"
-                                                              Command="{Binding UpButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[2]}">
+                                            <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                                  Style="{DynamicResource UpRepeatButtonDACStyle}"
+                                                                  Command="{Binding UpButtonDacCommand}"
+                                                                  CommandParameter="{Binding Dacs[2]}"/>
 
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
-
-                                                <RepeatButton Grid.Column="1" Grid.Row="1"
+                                            <RepeatButton Grid.Column="1" Grid.Row="1"
                                                               Command="{Binding DownButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[2]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
-                                            </Grid>
+                                                              CommandParameter="{Binding Dacs[2]}"
+                                                              Style="{DynamicResource DownRepeatButtonDACStyle}"/>
+                                        </Grid>
                                         </Border>
 
                                     <!--#endregion-->
@@ -434,19 +512,22 @@
 
                                         <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
-                                            <TextBlock Text="Температура:" ></TextBlock>
+                                            <TextBlock Text="Температура:" 
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="{Binding Temperature7971, TargetNullValue=__ __}"  ></TextBlock>
+                                            <TextBlock Text="{Binding Temperature7971, TargetNullValue=__ __}"  
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Border Margin="2">
-                                            <TextBlock Text="℃" ></TextBlock>
+                                            <TextBlock Text="℃" 
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
                                 </Grid>
@@ -464,10 +545,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!--#region ATT1 -->
-                            <Border BorderBrush="Black"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Margin="5">
+                            <Border Style="{DynamicResource BorderGroupStyle}">
 
                                 <Grid >
                                     <Grid.RowDefinitions>
@@ -476,14 +554,13 @@
                                         <RowDefinition Height="6*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Viewbox>
-                                        <TextBlock Text="ATT1"
-                                           Margin="5"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
-                                    </Viewbox>
+                                    <Border Style="{DynamicResource BorderHedarStyle}">
+                                        <Viewbox>
+                                            <TextBlock Text="ATT1" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                        </Viewbox>
+                                    </Border>
 
-                                    <Separator Grid.Row="1" Background="Black"></Separator>
 
                                     <Grid Grid.Row="2">
                                         <Grid.RowDefinitions>
@@ -497,44 +574,50 @@
                                         </Grid.RowDefinitions>
 
                                         <Viewbox>
-                                            <Border Width="50">
+                                            <Border Width="60">
                                                 <CheckBox Content="16dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin5}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin5}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="1">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="8dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin4}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin4}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="2">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="4dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin3}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin3}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="3">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="2dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin2}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin2}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="4">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="1dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin1}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin1}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
                                         
                                         <Viewbox Grid.Row="5">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="0.5dB"
-                                                          IsChecked="{Binding Attenuators[0].Pin0}"/>
+                                                          IsChecked="{Binding Attenuators[0].Pin0}"
+                                                          Style="{DynamicResource CheckBoxAtt}"/>
                                             </Border>
                                         </Viewbox>
 
@@ -550,13 +633,8 @@
                                                 <TextBox 
                                                     x:Name="Att1"
                                                     Grid.Column="1"
-                                                         FontSize="{Binding Path=ActualHeight,
-                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                                    AncestorType=Grid},
-                                                                    Converter={StaticResource fontSizeCon}}"
-                                                         HorizontalContentAlignment="Center"
-                                                         VerticalContentAlignment="Center"
-                                                         Text="{Binding Attenuators[0].Value}">
+                                                    Style="{DynamicResource TextBoxAttStyle}"
+                                                    Text="{Binding Attenuators[0].Value}">
                                                     <TextBox.InputBindings>
                                                         <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=Att1}"
@@ -565,26 +643,14 @@
                                                 </TextBox>
 
                                                 <RepeatButton Grid.Column="2" 
+                                                              Style="{DynamicResource UpRepeatButtonATTStyle}"
                                                               Command="{Binding UpButtonAttCommand}"
-                                                              CommandParameter="{Binding Attenuators[0]}">
-
-                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                                </RepeatButton>
+                                                              CommandParameter="{Binding Attenuators[0]}"/>
 
                                                 <RepeatButton Grid.Column="0" 
+                                                              Style="{DynamicResource DownRepeatButtonATTStyle}"
                                                               Command="{Binding DownButtonAttCommand}"
-                                                              CommandParameter="{Binding Attenuators[0]}">
-
-                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                                </RepeatButton>
+                                                              CommandParameter="{Binding Attenuators[0]}"/>
                                             </Grid>
                                         </Border>
 
@@ -595,10 +661,7 @@
 
                             <!--#region ATT2 -->
                             <Border Grid.Column="1"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5"
-                                    Margin="5">
+                                    Style="{DynamicResource BorderGroupStyle}">
 
                                 <Grid >
                                     <Grid.RowDefinitions>
@@ -607,14 +670,12 @@
                                         <RowDefinition Height="6*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Viewbox>
-                                        <TextBlock Text="ATT2"
-                                           Margin="5"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
-                                    </Viewbox>
-
-                                    <Separator Grid.Row="1" Background="Black"></Separator>
+                                    <Border Style="{DynamicResource BorderHedarStyle}">
+                                        <Viewbox>
+                                            <TextBlock Text="ATT2" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                        </Viewbox>
+                                    </Border>
 
                                     <Grid Grid.Row="2">
                                         <Grid.RowDefinitions>
@@ -628,44 +689,50 @@
                                         </Grid.RowDefinitions>
 
                                         <Viewbox>
-                                            <Border Width="50">
+                                            <Border Width="60">
                                                 <CheckBox Content="16dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin5}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin5}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="1">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="8dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin4}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin4}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="2">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="4dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin3}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin3}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="3">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="2dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin2}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin2}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="4">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="1dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin1}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin1}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
                                         <Viewbox Grid.Row="5">
-                                            <Border  Width="50">
+                                            <Border  Width="60">
                                                 <CheckBox Content="0.5dB"
-                                                          IsChecked="{Binding Attenuators[1].Pin0}"></CheckBox>
+                                                          IsChecked="{Binding Attenuators[1].Pin0}"
+                                                          Style="{DynamicResource CheckBoxAtt}"></CheckBox>
                                             </Border>
                                         </Viewbox>
 
@@ -682,14 +749,9 @@
                                                 <TextBox
                                                     x:Name="Att2"
                                                     Grid.Column="1"
-                                                         Grid.Row="0"
-                                                         FontSize="{Binding Path=ActualHeight,
-                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                                    AncestorType=Grid},
-                                                                    Converter={StaticResource fontSizeCon}}"
-                                                         HorizontalContentAlignment="Center"
-                                                         VerticalContentAlignment="Center"
-                                                         Text="{Binding Attenuators[1].Value}">
+                                                    Grid.Row="0"
+                                                    Style="{DynamicResource TextBoxAttStyle}"
+                                                    Text="{Binding Attenuators[1].Value}">
                                                     <TextBox.InputBindings>
                                                         <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=Att2}"
@@ -698,26 +760,14 @@
                                                 </TextBox>
 
                                                 <RepeatButton Grid.Column="2" 
+                                                              Style="{DynamicResource UpRepeatButtonATTStyle}"
                                                               Command="{Binding UpButtonAttCommand}"
-                                                              CommandParameter="{Binding Attenuators[1]}">
-
-                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                                </RepeatButton>
+                                                              CommandParameter="{Binding Attenuators[1]}"/>
 
                                                 <RepeatButton Grid.Column="0" 
+                                                              Style="{DynamicResource DownRepeatButtonATTStyle}"
                                                               Command="{Binding DownButtonAttCommand}"
-                                                              CommandParameter="{Binding Attenuators[1]}">
-
-                                                    <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                                </RepeatButton>
+                                                              CommandParameter="{Binding Attenuators[1]}"/>
                                             </Grid>
                                         </Border>
 
@@ -734,10 +784,7 @@
                         <!--#region Колонка 3 / 3-->
                         <!--#region Верхняя ячейка-->
                         <Border Grid.Column="1"
-                                BorderBrush="Black"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Margin="5">
+                                Style="{DynamicResource BorderGroupStyle}">
 
                             <Grid >
                                 <Grid.RowDefinitions>
@@ -746,15 +793,14 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Viewbox>
-                                    <TextBlock Text="797 [2]"
-                                           Margin="5"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
-                                </Viewbox>
+                                <Border Style="{DynamicResource BorderHedarStyle}">
+                                    <Viewbox>
+                                        <TextBlock Text="797[2]" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                    </Viewbox>
+                                </Border>
 
 
-                                <Separator Grid.Row="1" Background="Black"></Separator>
 
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
@@ -774,31 +820,59 @@
                                         <Border Margin="2">
                                             <TextBlock Text="SHDN"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
-                                    <ToggleButton Grid.Row="1" Margin="2" IsChecked="{Binding SHDN7972Low}">
-                                        <Viewbox>
-                                            <Border Width="50">
-                                                <TextBlock Text="Низкий" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </Viewbox>
-                                    </ToggleButton>
+                                    <Border Grid.Row="1" Style="{DynamicResource BorderHedarStyle}">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                    <ToggleButton Grid.Row="2" Margin="2" IsChecked="{Binding SHDN7972High}">
-                                        <Viewbox>
-                                            <Border Width="50">
-                                                <TextBlock Text="Высокий" HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </Viewbox>
-                                    </ToggleButton>
+                                            <Viewbox Margin="2">
+                                                <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN7972Low}"/>
+                                            </Viewbox>
+
+                                            <Viewbox Grid.Column="1" Margin="2">
+                                                <TextBlock Text="Низкий"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Row="2" Style="{DynamicResource BorderHedarStyle}">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Viewbox Margin="2">
+                                                <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
+                                                              IsChecked="{Binding SHDN7972High}"/>
+                                            </Viewbox>
+
+                                            <Viewbox Grid.Column="1" Margin="2">
+                                                <TextBlock Text="Высокий"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
 
                                     <Viewbox Grid.Column ="1" Grid.ColumnSpan="2">
                                         <Border Margin="2">
                                             <TextBlock Text="ЦАП 4 (В)"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
@@ -806,31 +880,22 @@
                                         <Border Margin="2" >
                                             <TextBlock Text="Шаг (мВ):"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                       HorizontalAlignment="Center"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
                                     <!--#region Step DAC 4-->
-                                    <Border Margin="2" Grid.Column="2" Grid.Row="2" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
-                                        <Grid>
-                                            <TextBox
+                                    <TextBox Grid.Column="2" Grid.Row="2"
                                                 x:Name="StepDAC4"
-                                                Margin="2"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
-                                                Text="{Binding Dacs[3].Step}" BorderBrush="Transparent" Padding="2"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}">
-                                                <TextBox.InputBindings>
-                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                Style="{DynamicResource TextBoxStepDACStyle}"
+                                                Text="{Binding Dacs[3].Step}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC4}"
                                                                 Gesture="Enter"  ></KeyBinding>
-                                                </TextBox.InputBindings>
-                                            </TextBox>
-                                        </Grid>
-                                    </Border>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
                                     <!--#endregion-->
 
                                     <!--#region DAC 4-->
@@ -851,12 +916,7 @@
                                                 Grid.RowSpan="2"
                                                 Grid.Column="0"
                                                 Grid.Row="0"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
+                                                Style="{DynamicResource TextBoxDACStyle}"
                                                 Text="{Binding Dacs[3].Value}">
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
@@ -866,45 +926,36 @@
                                             </TextBox>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="0"
-                                                              Command="{Binding UpButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[3]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                          Style="{DynamicResource UpRepeatButtonDACStyle}"
+                                                          Command="{Binding UpButtonDacCommand}"
+                                                          CommandParameter="{Binding Dacs[3]}"/>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="1"
-                                                              Command="{Binding DownButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[3]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                          Style="{DynamicResource DownRepeatButtonDACStyle}"
+                                                          Command="{Binding DownButtonDacCommand}"
+                                                          CommandParameter="{Binding Dacs[3]}"/>
                                         </Grid>
                                     </Border>
                                     <!--#endregion-->
                                     
                                     <Viewbox Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Border Margin="2">
-                                            <TextBlock Text="Температура:" ></TextBlock>
+                                            <TextBlock Text="Температура:" 
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="{Binding Temperature7972, TargetNullValue=__ __}"  ></TextBlock>
+                                            <TextBlock Text="{Binding Temperature7972, TargetNullValue=__ __}"  
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Border Margin="2">
-                                            <TextBlock Text="℃" ></TextBlock>
+                                            <TextBlock Text="℃" 
+                                                       Style="{DynamicResource TextCommonStyle}"></TextBlock>
                                         </Border>
                                     </Viewbox>
                                 </Grid>
@@ -917,10 +968,7 @@
                         <!--#region Нижняя ячейка-->
                         <Border Grid.Column="1"
                                 Grid.Row="1"
-                                BorderBrush="Black"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Margin="5">
+                                Style="{DynamicResource BorderGroupStyle}">
 
                             <Grid >
                                 <Grid.RowDefinitions>
@@ -929,15 +977,13 @@
                                     <RowDefinition Height="6*"/>
                                 </Grid.RowDefinitions>
 
-                                <Viewbox >
-                                    <TextBlock Text="ATT3"
-                                           Margin="5"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"/>
-                                </Viewbox>
+                                <Border Style="{DynamicResource BorderHedarStyle}">
+                                    <Viewbox>
+                                        <TextBlock Text="ATT3" 
+                                               Style="{DynamicResource TextHedarStyle}"/>
+                                    </Viewbox>
+                                </Border>
 
-                                <Separator Grid.Row="1" Background="Black"></Separator>
-                                
                                 <Grid Grid.Row="2">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*"/>
@@ -952,38 +998,28 @@
 
                                     <Viewbox VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="Шаг (мВ)"/>
+                                            <TextBlock Text="Шаг (мВ)"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="ЦАП 1 (В)"/>
+                                            <TextBlock Text="ЦАП 1 (В)"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
-
-
-                                    <Border Margin="2" Grid.Column="0" Grid.Row="1" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
-                                        <Grid>
-                                            <TextBox 
+                                    <TextBox Grid.Column="0" Grid.Row="1"
                                                 x:Name="StepDAC1"
-                                                Margin="2"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
-                                                Text="{Binding Dacs[0].Step}" BorderBrush="Transparent" Padding="2"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}">
-                                                <TextBox.InputBindings>
-                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                                Style="{DynamicResource TextBoxStepDACStyle}"
+                                                Text="{Binding Dacs[0].Step}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC1}"
                                                                 Gesture="Enter"  ></KeyBinding>
-                                                </TextBox.InputBindings>
-                                            </TextBox>
-                                        </Grid>
-                                    </Border>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
 
                                     <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="2">
                                         <Grid >
@@ -1002,12 +1038,7 @@
                                                 Grid.RowSpan="2"
                                                 Grid.Column="0"
                                                 Grid.Row="0"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
+                                                Style="{DynamicResource TextBoxDACStyle}"
                                                 Text="{Binding Dacs[0].Value}">
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
@@ -1017,60 +1048,41 @@
                                             </TextBox>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                          Style="{DynamicResource UpRepeatButtonDACStyle}"
                                                               Command="{Binding UpButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[0]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                              CommandParameter="{Binding Dacs[0]}"/>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                          Style="{DynamicResource DownRepeatButtonDACStyle}"
                                                               Command="{Binding DownButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[0]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                              CommandParameter="{Binding Dacs[0]}"/>
                                         </Grid>
                                     </Border>
 
                                     <Viewbox Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="Шаг (мВ)"/>
+                                            <TextBlock Text="Шаг (мВ)"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
                                     <Viewbox Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                         <Border Margin="2">
-                                            <TextBlock Text="ЦАП 2 (В)"/>
+                                            <TextBlock Text="ЦАП 2 (В)"
+                                                       Style="{DynamicResource TextCommonStyle}"/>
                                         </Border>
                                     </Viewbox>
 
-                                    <Border Margin="2" Grid.Column="0" Grid.Row="3" CornerRadius="5" BorderBrush="Black" BorderThickness="1" >
-                                        <Grid>
-                                            <TextBox x:Name="StepDAC2" 
-                                                Margin="2"
-                                                     HorizontalContentAlignment="Center"
-                                                     VerticalContentAlignment="Center"
-                                                     Text="{Binding Dacs[1].Step}" BorderBrush="Transparent" Padding="2"
-                                                     FontSize="{Binding Path=ActualHeight,
-                                                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                                AncestorType=Grid},
-                                                                Converter={StaticResource fontSizeCon}}">
-                                                <TextBox.InputBindings>
-                                                    <KeyBinding Command="{Binding EnterValueCommand}"
+                                    <TextBox Grid.Column="0" Grid.Row="3" 
+                                                     x:Name="StepDAC2" 
+                                                     Style="{DynamicResource TextBoxStepDACStyle}"
+                                                     Text="{Binding Dacs[1].Step}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC2}"
                                                                 Gesture="Enter"  ></KeyBinding>
-                                                </TextBox.InputBindings>
-                                            </TextBox>
-                                        </Grid>
-                                    </Border>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
 
                                     <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="2">
                                         <Grid >
@@ -1089,12 +1101,7 @@
                                                 Grid.RowSpan="2"
                                                 Grid.Column="0"
                                                 Grid.Row="0"
-                                                FontSize="{Binding Path=ActualHeight,
-                                                           RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                           AncestorType=Grid},
-                                                           Converter={StaticResource fontSizeCon}}"
-                                                HorizontalContentAlignment="Center"
-                                                VerticalContentAlignment="Center"
+                                                Style="{DynamicResource TextBoxDACStyle}"
                                                 Text="{Binding Dacs[1].Value}">
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
@@ -1104,26 +1111,14 @@
                                             </TextBox>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="0"
+                                                          Style="{DynamicResource UpRepeatButtonDACStyle}"
                                                               Command="{Binding UpButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[1]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleUp"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                              CommandParameter="{Binding Dacs[1]}"/>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="1"
+                                                          Style="{DynamicResource DownRepeatButtonDACStyle}"
                                                               Command="{Binding DownButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[1]}">
-
-                                                <fa5:ImageAwesome Margin="2" Icon="Solid_AngleDown"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  Foreground="Black" />
-
-                                            </RepeatButton>
+                                                              CommandParameter="{Binding Dacs[1]}"/>
                                         </Grid>
                                     </Border>
 
