@@ -57,8 +57,8 @@
 
     <!-- #region ToggleButton Style-->
     <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource SecundaryGrayColor}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryGrayColor}"/>
+        <Setter Property="Background" Value="{DynamicResource ToggleButtonBackgroundBorderNotActiveColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ToggleButtonBrushEllipseNotActiveColor}"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Width" Value="35"/>
         <Setter Property="MaxHeight" Value="20"/>
@@ -79,7 +79,7 @@
                                      Width="20"
                                      VerticalAlignment="Center"
                                      HorizontalAlignment="Left"
-                                     Fill="{DynamicResource TertiaryBorderBackgroundColor}"
+                                     Fill="{DynamicResource ToggleButtonBackgroundEllipseNotActiveColor}"
                                      Stroke="{TemplateBinding BorderBrush}"
                                      StrokeThickness="3"/>
                     </Grid>
@@ -116,10 +116,10 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Ellipse"
                                         Property="Fill"
-                                        Value="{DynamicResource SecundaryBlueColor}"/>
+                                        Value="{DynamicResource ToggleButtonBackgroundEllipseActiveColor}"/>
                             <Setter TargetName="Ellipse"
                                         Property="Stroke"
-                                        Value="{DynamicResource BorderBrushColor}"/>
+                                        Value="{DynamicResource ToggleButtonBrushEllipseActiveColor}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -722,10 +722,9 @@
     <!--#region TabItem Style -->
     <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextNotActiveColor}"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextHederColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TabItemTextNotActiveColor}"/>
         <Setter Property="FontFamily" Value="Segoe UI Black"/>
         <Setter Property="Margin" Value="5 0"/>
         <Setter Property="Width" Value="150"/>
@@ -756,17 +755,17 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="tabItemBorder" Property="BorderBrush" 
-                                        Value="{DynamicResource PrimaryBlueColor}"/>
+                                        Value="{DynamicResource TabItemBrushActiveColor}"/>
                         </Trigger>
 
 
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="tabItemBorder" Property="BorderBrush" 
-                                        Value="{DynamicResource PrimaryBlueColor}"/>
+                                        Value="{DynamicResource TabItemBrushActiveColor}"/>
                             <Setter Property="Background"
-                                        Value="{DynamicResource PrimaryBlueColor}"/>
+                                        Value="{DynamicResource TabItemBackgroundActiveColor}"/>
                             <Setter Property="Foreground"
-                                        Value="{DynamicResource TextActiveInBlueColor}"/>
+                                        Value="{DynamicResource TabItemTextActiveColor}"/>
                         </Trigger>
 
 

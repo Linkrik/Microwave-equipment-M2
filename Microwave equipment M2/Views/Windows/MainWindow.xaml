@@ -35,6 +35,15 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding Status}"/>
             </StatusBarItem>
+            <StatusBarItem Margin="0 0 10 0" HorizontalAlignment="Right">
+
+                    <StackPanel Orientation="Horizontal">
+                    <fa5:FontAwesome Icon="Solid_Sun"  FontSize="18" Margin="5 0" Foreground="#c90"/>
+                        <ToggleButton Style="{DynamicResource ToggleButtonStyle}" IsChecked="{Binding ThemeDark}"/>
+                    <fa5:FontAwesome Icon="Solid_Moon" FontSize="18" Margin="5 0" Foreground="{DynamicResource IconMoonColor}"/>
+                </StackPanel>
+
+            </StatusBarItem>
         </StatusBar>
         <TabControl Style="{DynamicResource TabControlStyle}">
             

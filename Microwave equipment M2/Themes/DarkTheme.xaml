@@ -1,4 +1,67 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <!-- Colors -->
+
+    <!-- Border Background Colors -->
+    <SolidColorBrush x:Key="PrimaryBorderBackgroundColor" Color="#0f1a33"/>
+    <SolidColorBrush x:Key="SecundaryBorderBackgroundColor" Color="#0f233e"/>
+    <SolidColorBrush x:Key="TertiaryBorderBackgroundColor" Color="#1c3251"/>
+
+    <!-- BorderBrush Colors -->
+    <SolidColorBrush x:Key="BorderBrushColor" Color="#233DC7"/>
+    <SolidColorBrush x:Key="BorderBrushHederColor" Color="#FFC5C6C7"/>
+
+    <!-- TabItem Color -->
+    <SolidColorBrush x:Key="TabItemBrushActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TabItemBackgroundActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TabItemTextActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TabItemTextNotActiveColor" Color="#bdcae7"/>
+
+    <!-- ToggleButton Colors -->
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseActiveColor" Color="#8891a2"/>
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseNotActiveColor" Color="#bdcae7"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseNotActiveColor" Color="#1c3251"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseActiveColor" Color="#0144a6"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundBorderNotActiveColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundBorderActiveColor" Color="#496FFF"/>
+
+    <!-- Text Colors -->
+    <SolidColorBrush x:Key="TextHederColor" Color="#bdcae7"/>
+
+    <!-- RadioButton Colors -->
+    <SolidColorBrush x:Key="RadioButtonTextActiveInColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="RadioButtonTextNotActiveColor" Color="#bdcae7"/>
+    <SolidColorBrush x:Key="RadioButtonBackgroundColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="RadioButtonBrushColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="RadioButtonClicColor" Color="#0144a6"/>
+
+    <!-- TextBoxNumerecUpDown Colors -->
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownTextActiveInColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownTextNotActiveColor" Color="#bdcae7"/>
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownBackgroundColor" Color="#1c3251"/>
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownBrushColorActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownBrushColorNotActiveColor" Color="#FFC5C6C7"/>
+
+    <!-- RepeatButton NumerecUpDown Colors -->
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownIconActiveInColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownIconNotActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundNotActiveColor" Color="#1c3251"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundClicColor" Color="#7A7CFF"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushNotActiveColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushActiveColor" Color="#496FFF"/>
+
+    <!-- CheckBox Colors -->
+    <SolidColorBrush x:Key="CheckBoxIconActiveInColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="CheckBoxBackgroundActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="CheckBoxBackgroundNotActiveColor" Color="#1c3251"/>
+    <SolidColorBrush x:Key="CheckBoxBackgroundClicColor" Color="#7A7CFF"/>
+    <SolidColorBrush x:Key="CheckBoxBrushNotActiveColor" Color="#545b6a"/>
+    <SolidColorBrush x:Key="CheckBoxBrushActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="CheckBoxTextActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="CheckBoxTextNotActiveColor" Color="#bdcae7"/>
+
+    <!-- Icon Color -->
+    <SolidColorBrush x:Key="IconMoonColor" Color="#868ca3"/>
+
 </ResourceDictionary>

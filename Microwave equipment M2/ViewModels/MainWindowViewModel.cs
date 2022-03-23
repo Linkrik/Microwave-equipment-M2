@@ -1,5 +1,6 @@
 ﻿using Microwave_equipment_M2.Infrastructure.Commands;
 using Microwave_equipment_M2.Services;
+using Microwave_equipment_M2.Themes;
 using Microwave_equipment_M2.ViewModels.Base;
 
 using System;
@@ -23,6 +24,25 @@ namespace Microwave_equipment_M2.ViewModels
             set => Set(ref _title, value);
         }
         #endregion
+
+        private bool themeDark = false;
+
+        public bool ThemeDark
+        {
+            get => themeDark;
+            set
+            {
+                Set(ref themeDark, value);
+                if (themeDark == true)
+                {
+                    ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
+                }
+                else
+                {
+                    ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
+                }
+            }
+        }
 
         #region Channels
 
@@ -309,8 +329,8 @@ namespace Microwave_equipment_M2.ViewModels
 
 
 
-
         #endregion
+
         public MainWindowViewModel()
         {
             #region Команды

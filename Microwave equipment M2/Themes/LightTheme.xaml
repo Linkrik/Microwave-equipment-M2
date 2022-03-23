@@ -12,23 +12,22 @@
     <SolidColorBrush x:Key="BorderBrushColor" Color="#233DC7"/>
     <SolidColorBrush x:Key="BorderBrushHederColor" Color="#FFC5C6C7"/>
 
+    <!-- TabItem Color -->
+    <SolidColorBrush x:Key="TabItemBrushActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TabItemBackgroundActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="TabItemTextActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TabItemTextNotActiveColor" Color="#64677A"/>
+
+    <!-- ToggleButton Colors -->
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseActiveColor" Color="#233DC7"/>
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseNotActiveColor" Color="#64677A"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseNotActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundBorderNotActiveColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundBorderActiveColor" Color="#496FFF"/>
     
-    <!-- Primary Colors -->
-    <SolidColorBrush x:Key="PrimaryBlueColor" Color="#496FFF"/>
-    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#64677A"/>
-
-    <!-- Secundary Colors -->
-    <SolidColorBrush x:Key="SecundaryBlueColor" Color="#496FFF"/>
-    <SolidColorBrush x:Key="SecundaryGrayColor" Color="#CECECE"/>
-
-    <!-- Tertiary Colors -->
-    <SolidColorBrush x:Key="TertiaryBlueColor" Color="#C2D1FC"/>
-
     <!-- Text Colors -->
-    <SolidColorBrush x:Key="TextActiveInBlueColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="TextNotActiveColor" Color="Black"/>
     <SolidColorBrush x:Key="TextHederColor" Color="#545b6a"/>
-    <SolidColorBrush x:Key="SecundaryTextColor" Color="#496FFF"/>
 
     <!-- RadioButton Colors -->
     <SolidColorBrush x:Key="RadioButtonTextActiveInColor" Color="#FFFFFF"/>
@@ -63,7 +62,8 @@
     <SolidColorBrush x:Key="CheckBoxTextActiveColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="CheckBoxTextNotActiveColor" Color="#545b6a"/>
 
-
+    <!-- Icon Color -->
+    <SolidColorBrush x:Key="IconMoonColor" Color="#adb5d0"/> 
 
 
 </ResourceDictionary>
