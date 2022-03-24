@@ -1,4 +1,5 @@
 ﻿using Microwave_equipment_M2.Infrastructure.Commands;
+using Microwave_equipment_M2.Models;
 using Microwave_equipment_M2.Services;
 using Microwave_equipment_M2.Themes;
 using Microwave_equipment_M2.ViewModels.Base;
@@ -25,6 +26,7 @@ namespace Microwave_equipment_M2.ViewModels
         }
         #endregion
 
+        #region Themes
         private bool themeDark = false;
 
         public bool ThemeDark
@@ -43,19 +45,11 @@ namespace Microwave_equipment_M2.ViewModels
                 }
             }
         }
+        #endregion Themes
 
         #region Channels
 
-        enum СhannelsEnum
-        {
-            Through,        //Сквозной
-            LowFrequency,   //Низкочастотный 
-            Amplifying,     //Уселительный
-            UM40,           //УМ-40
-            Locking         //Запирание
-        }
-
-        private СhannelsEnum channel = СhannelsEnum.Through;
+        private Сhannels channel = Сhannels.Through;
 
         private void OnPropertyChangedAllСhannels()
         {
@@ -69,50 +63,50 @@ namespace Microwave_equipment_M2.ViewModels
         /// <summary> window title </summary>
         public bool ThroughChannel
         {
-            get => channel == СhannelsEnum.Through;
+            get => channel == Сhannels.Through;
             set
             {
-                channel = СhannelsEnum.Through;
+                channel = Сhannels.Through;
                 OnPropertyChangedAllСhannels();
             }
         }
 
         public bool LowFrequencyChannel
         {
-            get => channel == СhannelsEnum.LowFrequency;
+            get => channel == Сhannels.LowFrequency;
             set
             {
-                channel = СhannelsEnum.LowFrequency;
+                channel = Сhannels.LowFrequency;
                 OnPropertyChangedAllСhannels();
             }
         }
 
         public bool AmplifyingChannel
         {
-            get => channel == СhannelsEnum.Amplifying;
+            get => channel == Сhannels.Amplifying;
             set
             {
-                channel = СhannelsEnum.Amplifying;
+                channel = Сhannels.Amplifying;
                 OnPropertyChangedAllСhannels();
             }
         }
 
         public bool UM40Channel
         {
-            get => channel == СhannelsEnum.UM40;
+            get => channel == Сhannels.UM40;
             set
             {
-                channel = СhannelsEnum.UM40;
+                channel = Сhannels.UM40;
                 OnPropertyChangedAllСhannels();
             }
         }
 
         public bool LockingChannel
         {
-            get => channel == СhannelsEnum.Locking;
+            get => channel == Сhannels.Locking;
             set
             {
-                channel = СhannelsEnum.Locking;
+                channel = Сhannels.Locking;
                 OnPropertyChangedAllСhannels();
             }
         }
@@ -217,48 +211,9 @@ namespace Microwave_equipment_M2.ViewModels
 
         #endregion
 
-        #region Socket
-        #region IP address
+        #region Com порт
 
-        public IPEndPoint IPPoint { get => new IPEndPoint(ipAddress, port); }
-
-
-        private IPAddress ipAddress = IPAddress.Parse("192.168.0.1");
-        public string IpAddress
-        {
-            get => Convert.ToString(ipAddress);
-            set
-            {
-                IPAddress newValue;
-                if (!IPAddress.TryParse(value, out newValue))
-                {
-                    newValue = ipAddress;
-                }
-                Set(ref ipAddress, newValue);
-            }
-        }
-
-        #endregion IP address
-
-        #region Port
-
-        private int port = 5025;
-        public string Port
-        {
-            get => Convert.ToString(port);
-            set
-            {
-                int newValue;
-                if (!int.TryParse(value, out newValue))
-                {
-                    newValue = port;
-                }
-                Set(ref port, newValue);
-            }
-        }
-
-        #endregion Port
-        #endregion Socket
+        #endregion Com порт
 
         public ObservableCollection<Dac> Dacs { get; set; }
         public ObservableCollection<Attenuator> Attenuators { get; set; }
