@@ -18,8 +18,8 @@
     <SolidColorBrush x:Key="TabItemTextNotActiveColor" Color="#bdcae7"/>
 
     <!-- ToggleButton Colors -->
-    <SolidColorBrush x:Key="ToggleButtonBrushEllipseActiveColor" Color="#8891a2"/>
-    <SolidColorBrush x:Key="ToggleButtonBrushEllipseNotActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ToggleButtonBrushEllipseNotActiveColor" Color="#8891a2"/> 
     <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseFalseEnabled" Color="#FFC5C6C7"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseNotActiveColor" Color="#1c3251"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseActiveColor" Color="#0144a6"/>

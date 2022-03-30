@@ -242,8 +242,8 @@
                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            Visibility="Collapsed"
                                            Foreground="{DynamicResource PrimaryTextBoxGrayColor}"
-                                           
                                            />
+                                        <ContentPresenter Width="50"></ContentPresenter>
                                     </Grid>
                                 </Border>
                             </Viewbox>
@@ -461,6 +461,7 @@
                                            Foreground="{DynamicResource PrimaryTextBoxGrayColor}"
                                            
                                            />
+                                        <ContentPresenter Width="35"></ContentPresenter>
                                     </Grid>
                                 </Border>
                             </Viewbox>
