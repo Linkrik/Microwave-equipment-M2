@@ -122,6 +122,17 @@
                                         Value="{DynamicResource ToggleButtonBrushEllipseActiveColor}"/>
                         </Trigger>
 
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Ellipse"
+                                        Property="Fill"
+                                        Value="{DynamicResource ToggleButtonBackgroundEllipseFalseEnabled}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill"
+                                        Value="{DynamicResource ToggleButtonBackgroundEllipseMouseOver}"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

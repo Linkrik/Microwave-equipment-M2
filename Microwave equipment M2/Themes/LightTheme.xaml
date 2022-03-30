@@ -21,8 +21,10 @@
     <!-- ToggleButton Colors -->
     <SolidColorBrush x:Key="ToggleButtonBrushEllipseActiveColor" Color="#233DC7"/>
     <SolidColorBrush x:Key="ToggleButtonBrushEllipseNotActiveColor" Color="#64677A"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseFalseEnabled" Color="#FFC5C6C7"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseNotActiveColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ToggleButtonBackgroundEllipseMouseOver" Color="#C2D1FC"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundBorderNotActiveColor" Color="#FFC5C6C7"/>
     <SolidColorBrush x:Key="ToggleButtonBackgroundBorderActiveColor" Color="#496FFF"/>
     
