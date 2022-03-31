@@ -6,10 +6,12 @@ using Microwave_equipment_M2.ViewModels.Base;
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Microwave_equipment_M2.ViewModels
 {
@@ -47,68 +49,154 @@ namespace Microwave_equipment_M2.ViewModels
         }
         #endregion Themes
 
+        #region Module
+
+        public M2MicrowaveCom Module { get; set; }
+
+        public ObservableCollection<string>ComPortsNames{get;set;}
+        public string SelectedComPortName
+        {
+            get => Module.NameComPort;
+            set
+            {
+                Module.NameComPort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsEnabledComPortsName { get => !Module.IsConnected; }
+
+        public bool Connected
+        {
+            get => Module.IsConnected;
+            set
+            {
+                if (value)
+                {
+                    SetInitParameters();
+                }
+
+                if (Module.IsConnected)
+                {
+                    Module.Disconnect();
+                    Status = "не подключен";
+                }
+                else
+                {
+                    Status = Module.Connect()? "подключен": "не подключен";
+                }
+
+                OnPropertyChanged();
+                OnPropertyChanged("IsEnabledComPortsName");
+            }
+        }
+
+
+        #region Status : string - Статус подключения
+
+        /// <summary>Статус подключения</summary>
+        private string _status = "не подключен";
+
+        /// <summary>Статус подключения</summary>
+        public string Status
+        {
+            get => _status;
+            set => Set(ref _status, value);
+        }
+
+        #endregion
+
+
+        private void SetInitParameters()
+        {
+            foreach (var dac in Dacs)
+            {
+                dac.Value = -2;
+            }
+
+            foreach (var att in Attenuators)
+            {
+                att.Value = 0;
+            }
+
+            SHDN12V = false;
+            SHDN460 = false;
+            SHDN5597 = false;
+            SHDN7971Low = false;
+            SHDN7971High = false;
+            SHDN7972Low = false;
+            shdn7972high = false;
+
+            ThroughChannel = true;
+        }
+
+        #endregion Module
+
         #region Channels
 
         private Сhannels channel = Сhannels.Through;
 
-        private void OnPropertyChangedAllСhannels()
-        {
-            OnPropertyChanged("ThroughChannel");
-            OnPropertyChanged("LowFrequencyChannel");
-            OnPropertyChanged("AmplifyingChannel");
-            OnPropertyChanged("UM40Channel");
-            OnPropertyChanged("LockingChannel");
-        }
 
-        /// <summary> window title </summary>
-        public bool ThroughChannel
+        private Сhannels valueChannel
         {
-            get => channel == Сhannels.Through;
+            get { return channel; }
             set
             {
-                channel = Сhannels.Through;
-                OnPropertyChangedAllСhannels();
+                if (channel == value)
+                    return;
+
+                if (channel == Сhannels.LowFrequency)
+                {
+                    Module.SetPwr((uint)Power.Power5920, (uint)Power.All);
+                }
+                else
+                {
+                    Module.SetPwr((uint)Power.Power5920, 0);
+                }
+
+                channel = value;
+                ActivateСhannel(channel);
+                OnPropertyChanged("ThroughChannel");
+                OnPropertyChanged("LowFrequencyChannel");
+                OnPropertyChanged("AmplifyingChannel");
+                OnPropertyChanged("UM40Channel");
+                OnPropertyChanged("LockingChannel");
             }
+        }
+       
+        public bool ThroughChannel
+        {
+            get => valueChannel == Сhannels.Through;
+            set => valueChannel = value ? Сhannels.Through : valueChannel;
         }
 
         public bool LowFrequencyChannel
         {
-            get => channel == Сhannels.LowFrequency;
-            set
-            {
-                channel = Сhannels.LowFrequency;
-                OnPropertyChangedAllСhannels();
-            }
+            get => valueChannel == Сhannels.LowFrequency;
+            set => valueChannel = value ? Сhannels.LowFrequency : valueChannel;
         }
 
         public bool AmplifyingChannel
         {
-            get => channel == Сhannels.Amplifying;
-            set
-            {
-                channel = Сhannels.Amplifying;
-                OnPropertyChangedAllСhannels();
-            }
+            get => valueChannel == Сhannels.Amplifying;
+            set => valueChannel = value ? Сhannels.Amplifying : valueChannel;
         }
 
         public bool UM40Channel
         {
-            get => channel == Сhannels.UM40;
-            set
-            {
-                channel = Сhannels.UM40;
-                OnPropertyChangedAllСhannels();
-            }
+            get => valueChannel == Сhannels.UM40;
+            set => valueChannel = value ? Сhannels.UM40 : valueChannel;
         }
 
         public bool LockingChannel
         {
-            get => channel == Сhannels.Locking;
-            set
-            {
-                channel = Сhannels.Locking;
-                OnPropertyChangedAllСhannels();
-            }
+            get => valueChannel == Сhannels.Locking;
+            set => valueChannel = value ? Сhannels.Locking : valueChannel;
+        }
+
+        public void ActivateСhannel(Сhannels сhannelName)
+        {
+            Module.SetRfChnl(0, (short)сhannelName);
         }
 
         #endregion Channels
@@ -119,54 +207,146 @@ namespace Microwave_equipment_M2.ViewModels
         public bool SHDN12V
         {
             get => shdn12v;
-            set => Set(ref shdn12v, value);
+            set
+            {
+                if (!value)
+                {
+                    SHDN460 = false;
+                    SHDN7971High = false;
+                    SHDN7972High = false;
+                    SHDN7971Low = false;
+                    SHDN7972Low = false;
+                    SHDN5597 = false;
+                }
+
+                ControlPower(Power.Power12V, value);
+                Set(ref shdn12v, value);
+            }
+          
         }
 
         private bool shdn460 = false;
         public bool SHDN460
         {
             get => shdn460;
-            set => Set(ref shdn460, value);
+            set
+            {
+                ControlPower(Power.Power460, value);
+                Set(ref shdn460, value);
+            }
         }
 
         private bool shdn5597 = false;
         public bool SHDN5597
         {
             get => shdn5597;
-            set => Set(ref shdn5597, value);
+            set
+            {
+                ControlPower(Power.Power5597, value);
+                Set(ref shdn5597, value);
+            }
+
         }
 
         private bool shdn7971low = false;
         public bool SHDN7971Low
         {
             get => shdn7971low;
-            set => Set(ref shdn7971low, value);
+            set
+            {
+                if (!value)
+                {
+                    SHDN7971High = false;
+                }
+
+                ControlPower(Power.Power797_1Low, value);
+                Set(ref shdn7971low, value);
+            }
         }
 
         private bool shdn7971high = false;
         public bool SHDN7971High
         {
             get => shdn7971high;
-            set => Set(ref shdn7971high, value);
+            set
+            {
+                ControlPower(Power.Power797_1High, value);
+                Set(ref shdn7971high, value);
+            }
+            
         }
 
         private bool shdn7972low = false;
         public bool SHDN7972Low
         {
             get => shdn7972low;
-            set => Set(ref shdn7972low, value);
+            set
+            {
+                if (!value)
+                {
+                    SHDN7972High = false;
+                }
+
+                ControlPower(Power.Power797_2Low, value);
+                Set(ref shdn7972low, value);
+            }
         }
 
         private bool shdn7972high = false;
         public bool SHDN7972High
         {
             get => shdn7972high;
-            set => Set(ref shdn7972high, value);
+            set
+            {
+                ControlPower(Power.Power797_2High,value);
+                Set(ref shdn7972high, value);
+            }
+        }
+
+
+        public void ActivatePower(Power powerName)
+        {
+            Module.SetPwr((uint)powerName, (uint)Power.All);
+        }
+
+        public void DeactivatePower(Power powerName)
+        {
+            Module.SetPwr((uint)powerName, 0);
+        }
+
+        private void ControlPower(Power powerName, bool state)
+        {
+            if (state) ActivatePower(powerName);
+            else DeactivatePower(powerName);
         }
 
         #endregion SHDNs
 
         #region Temperatures
+        private DispatcherTimer timer;
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (!Module.IsConnected)
+            {
+                timer.Stop();
+            }
+            else
+            {
+                try
+                {
+                    TemperatureShdn5597 = GetDatTemp(ThermalSensors.TermSHDN5597);
+                    Temperature7971 = GetDatTemp(ThermalSensors.TermSHDN797_1);
+                    Temperature7972 = GetDatTemp(ThermalSensors.TermSHDN797_2);
+                }
+                catch (Exception)
+                {
+                    timer.Stop();
+                    //MessageBox.Show($"Прибор не отвечает\nПЕРЕПОДКЛЮЧИТЕСЬ!\n\n{ex}", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        } //событие запуска таймера
+
 
         private string temperatureShdn5597;
 
@@ -195,25 +375,20 @@ namespace Microwave_equipment_M2.ViewModels
             set => Set(ref temperature7972, value);
         }
 
-        #endregion Temperatures
-
-        #region Status : string - Статус программы
-
-        /// <summary>Статус подключения</summary>
-        private string _status = "не подключен";
-
-        /// <summary>Статус подключения</summary>
-        public string Status
+        public string GetDatTemp(ThermalSensors thermalSensors)
         {
-            get => _status;
-            set => Set(ref _status, value);
+            double data = Module.GetTemp((short)thermalSensors);
+
+            if (data == -273.15)
+            {
+                return null;
+            }
+            return data.ToString("0.##");
         }
 
-        #endregion
 
-        #region Com порт
+        #endregion Temperatures
 
-        #endregion Com порт
 
         public ObservableCollection<Dac> Dacs { get; set; }
         public ObservableCollection<Attenuator> Attenuators { get; set; }
@@ -283,6 +458,20 @@ namespace Microwave_equipment_M2.ViewModels
         #endregion
 
 
+        #region Update List Com Ports Command
+        public ICommand UpdateListComPortsCommand { get; }
+
+        private bool CanUpdateListComPortsCommandExecute(object p) => true;
+        private void OnUpdateListComPortsCommandExecuted(object p)
+        {
+            ComPortsNames.Clear(); //new ObservableCollection<string>();
+            foreach (var Name in Module.SearchComPorts())
+            {
+                ComPortsNames.Add(Name);
+            }
+        }
+        #endregion
+
 
         #endregion
 
@@ -296,46 +485,92 @@ namespace Microwave_equipment_M2.ViewModels
             UpButtonAttCommand = new LambdaCommand(OnUpButtonAttCommandExecuted, CanUpButtonAttCommandExecute);
             DownButtonAttCommand = new LambdaCommand(OnDownButtonAttCommandExecuted, CanDownButtonAttCommandExecute);
 
-
-
             EnterValueCommand = new LambdaCommand(OnEnterValueCommandExecuted, CanEnterValueCommandCommandExecute);
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
 
+            UpdateListComPortsCommand = new LambdaCommand(OnUpdateListComPortsCommandExecuted, CanUpdateListComPortsCommandExecute);
+
             #endregion
 
+            #region Search Com Port
+            Module = new M2MicrowaveCom();
+            ComPortsNames = new ObservableCollection<string>();
+            foreach (var Name in Module.SearchComPorts())
+            {
+                ComPortsNames.Add(Name);
+            }
+            #endregion Search Com Port
+
+            Module.PropertyChanged += OnModelPropertyChanged;
+
+            #region Temperature timer
+            timer = new DispatcherTimer();
+            timer.Tick += new EventHandler(timer_Tick);     //добавляем событие таймера при запуске
+            timer.Interval = new TimeSpan(0, 0, 0, 3); //событие будет срабатывать через каждые 3 сек. 
+            #endregion Temperature timer
+
+            #region ADC and ATT
             Dacs = new ObservableCollection<Dac>
             {
-                new Dac(-2,-0.3m,0.00122m,-0.3m,9.76m),
-                new Dac(-2,-0.3m,0.00122m,-0.3m,9.76m),
-                new Dac(-2,-0.3m,0.00122m,-0.3m,9.76m),
-                new Dac(-2,-0.3m,0.00122m,-0.3m,9.76m)
+                new Dac(-5,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac1_Att3,Module),
+                new Dac(-5,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac2_Att3,Module),
+                new Dac(-2,-0.3m,0.00061m,-2,true,9.76m, Models.Dacs.Dac3_797_1,Module),
+                new Dac(-2,-0.3m,0.00061m,-2,true,9.76m, Models.Dacs.DAC4_797_2,Module),
             };
 
             Attenuators = new ObservableCollection<Attenuator>
             {
-                new Attenuator(0, 31.5m, 0, 0.5m),
-                new Attenuator(0, 31.5m, 0, 0.5m)
+                new Attenuator(0, 31.5m, 0, 0.5m, Models.Attenuators.Att1, Module),
+                new Attenuator(0, 31.5m, 0, 0.5m, Models.Attenuators.Att2, Module )
             };
-
+            #endregion ADC and ATT
         }
 
+        #region Обработка событий
+        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged("Connected");
+            Status = Module.IsConnected ? "подключен" : "не подключен";
+            
+            if (Module.IsConnected)
+            {
+                timer.Start();
+            }
+            else
+            {
+                timer.Stop();
+            }
+        }
 
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            Module.Disconnect();
+        }
+        #endregion
 
         public class Dac : ViewModel
         {
-            public Dac(decimal minimumValue,decimal maximumValue,decimal minimumValueStep, decimal newValue, decimal newStep)
+            public Dac(decimal minimumValue,decimal maximumValue,
+                       decimal minimumValueStep, decimal newValue,
+                       bool useRamp,
+                       decimal newStep, Dacs dacName , M2MicrowaveCom m2MicrowaveCom)
             {
+                module = m2MicrowaveCom;
                 MinValue = minimumValue;
                 MaxValue = maximumValue;
                 MinValueStep = minimumValueStep;
                 Value = newValue;
+                rump = useRamp;
                 range = Math.Abs(maximumValue - minimumValue);
                 Step = newStep;
+                dacNamber = dacName;
             }
 
             private Dac() { }
-
+            private Dacs dacNamber;
+            private M2MicrowaveCom module;
             private decimal range;
+            private bool rump = false;
             private decimal value;
             public decimal Value
             {
@@ -349,10 +584,20 @@ namespace Microwave_equipment_M2.ViewModels
                         newValue = decimal.Round(newValue / MinValueStep) * MinValueStep;
                     }
                     newValue = decimal.Parse(newValue.ToString("G29"));
+
+                    if (rump)
+                    {
+                        SetValueDacRamp(dacNamber, newValue);
+                    }
+                    else
+                    {
+                        SetValueDac(dacNamber, newValue);
+                    }
+
                     Set(ref this.value, newValue);
+                    
                 }
             }
-
 
             private decimal minValue;
             public decimal MinValue
@@ -406,6 +651,19 @@ namespace Microwave_equipment_M2.ViewModels
                     Set(ref step, result);
                 }
             }
+
+            private void SetValueDacRamp(Dacs dacName, decimal valueVolt)
+            {
+                uint dacValue = (uint)(Math.Abs(valueVolt) / MinValueStep);
+                short stepRamp  = Convert.ToInt16(decimal.Round(0.01m/MinValueStep));
+                module.SetDacRamp((short)dacName, dacValue, stepRamp);
+            }
+
+            private void SetValueDac(Dacs dacName, decimal valueVolt)
+            {
+                uint dacValue = (uint)(Math.Abs(valueVolt) / MinValueStep);
+                module.SetDac((short)dacName, dacValue);
+            }
         }
 
         public class Attenuator : ViewModel
@@ -416,18 +674,25 @@ namespace Microwave_equipment_M2.ViewModels
             decimal maxValue;
             private bool[] pins = new bool[6];
 
-            private bool activityFlagValue;
-            private bool activityFlagPins;
+            private Attenuators attNamber;
+            private M2MicrowaveCom module;
 
-            public Attenuator(decimal minimumValue, decimal maximumValue, decimal newValue, decimal newStep)
+            public Attenuator(decimal minimumValue, decimal maximumValue,
+                              decimal newValue, decimal newStep,
+                              Attenuators attName, M2MicrowaveCom m2MicrowaveCom)
             {
+                module = m2MicrowaveCom;
                 minValue = minimumValue;
                 maxValue = maximumValue;
                 Value = newValue;
                 step = newStep;
+                attNamber = attName;
             }
 
-            private Attenuator() { }
+            private void SetValueAtt(Attenuators attName, uint valueUint)
+            {
+                module.SetAtt(0, (short)attName, (short)valueUint);
+            }
 
             public decimal Step { get => step; }
             public bool[] Pins { get => pins; }
@@ -441,6 +706,7 @@ namespace Microwave_equipment_M2.ViewModels
                     newValue = Math.Max(minValue, Math.Min(maxValue, value));
 
                     Set(ref this.value, (uint)(newValue * 2));
+                    SetValueAtt(attNamber,this.value);
 
                     for (int i = 0; i < 6; i++)
                     {
