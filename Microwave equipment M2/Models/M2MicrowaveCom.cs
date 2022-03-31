@@ -21,7 +21,6 @@ namespace Microwave_equipment_M2.Models
 
         public M2MicrowaveCom()
         {
-            power = Power.None;
             comPort = null;
             isConnected = false;
         }
