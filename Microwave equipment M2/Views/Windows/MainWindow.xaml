@@ -12,7 +12,7 @@
         Height="450" MinHeight="450" Width="610" MinWidth="610">
 
     <Window.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel x:Name="MainVM"/>
     </Window.DataContext>
 
     <Window.Resources>
@@ -80,28 +80,35 @@
                             </Border>
 
                             <TextBlock Grid.Row="2"
-                                       Text="IP:"
+                                       Text="COM порт:"
                                        Margin="5,5,5,0" 
                                        Style="{DynamicResource TextCommonStyle}"/>
 
-                            <TextBox Grid.Row="3"
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="2*"/>    
+                                </Grid.ColumnDefinitions>
+                                
+                                
+                                <ComboBox 
                                      Height="25"
                                      Margin="5"
                                      FontSize="15"
-                                     Text="{Binding IpAddress}"
-                                     MaxLength="15"></TextBox>
+                                     ItemsSource="{Binding ComPortsNames}"
+                                     SelectedItem="{Binding SelectedComPortName}"
+                                     IsEnabled="{Binding IsEnabledComPortsName}"
+                                     
+                                     ></ComboBox>
 
-                            <TextBlock Grid.Row="4"
-                                       Text="Порт:"
-                                       Margin="5,5,5,0"
-                                       Style="{DynamicResource TextCommonStyle}"/>
+                                <Button Grid.Column="1" Margin="5" Height="25"
+                                        IsEnabled="{Binding IsEnabledComPortsName}"
+                                        Command="{Binding UpdateListComPortsCommand}"></Button>
 
-                            <TextBox Grid.Row="5"
-                                     Height="25"
-                                     Margin="5"
-                                     FontSize="15"
-                                     MaxLength="5"
-                                     Text="{Binding Port}"></TextBox>
+                            </Grid>
+
+
+
 
                             <Border Grid.Row="6" Style="{DynamicResource BorderHedarStyle}">
                                 <Grid >
@@ -109,7 +116,9 @@
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    <ToggleButton Height="30" Margin="5" Style="{DynamicResource ToggleButtonStyle}"/>
+                                    <ToggleButton Height="30" Margin="5" Style="{DynamicResource ToggleButtonStyle}"
+                                                  IsChecked="{Binding Connected}"
+                                                  />
                                     <TextBlock Grid.Column="1" Text="Подключиться"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
@@ -163,7 +172,7 @@
 
                                 <RadioButton Grid.Row="2" 
                                              GroupName="Сhannel" 
-                                             IsChecked="{Binding ThroughChannel}"
+                                             IsChecked="{Binding ThroughChannel, Mode=TwoWay}"
                                              Style="{DynamicResource RadioButtonStyle}">
                                     <Viewbox>
                                         <Border Width="120">
@@ -176,7 +185,7 @@
 
                                 <RadioButton Grid.Row="3"
                                              GroupName="Сhannel"
-                                             IsChecked="{Binding LowFrequencyChannel}"
+                                             IsChecked="{Binding LowFrequencyChannel,Mode=TwoWay}"
                                              Style="{DynamicResource RadioButtonStyle}">
                                     <Viewbox>
                                         <Border Width="120">
@@ -189,7 +198,7 @@
 
                                 <RadioButton Grid.Row="4" 
                                              GroupName="Сhannel"
-                                             IsChecked="{Binding AmplifyingChannel}"
+                                             IsChecked="{Binding AmplifyingChannel,Mode=TwoWay}"
                                              Style="{DynamicResource RadioButtonStyle}">
                                     <Viewbox>
                                         <Border Width="120">
@@ -202,7 +211,7 @@
 
                                 <RadioButton Grid.Row="5" 
                                              GroupName="Сhannel" 
-                                             IsChecked="{Binding UM40Channel}"
+                                             IsChecked="{Binding UM40Channel,Mode=TwoWay}"
                                              Style="{DynamicResource RadioButtonStyle}">
                                     <Viewbox>
                                         <Border Width="120">
@@ -215,7 +224,7 @@
 
                                 <RadioButton Grid.Row="6" 
                                              GroupName="Сhannel" 
-                                             IsChecked="{Binding LockingChannel}"
+                                             IsChecked="{Binding LockingChannel,Mode=TwoWay}"
                                              Style="{DynamicResource RadioButtonStyle}">
                                     <Viewbox>
                                         <Border Width="120">
@@ -258,7 +267,7 @@
 
                                         <Viewbox Margin="2">
                                             <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN12V}"/>
+                                                          IsChecked="{Binding SHDN12V}"/>
                                         </Viewbox>
 
                                         <Viewbox Grid.Column="1" Margin="2">
@@ -281,7 +290,8 @@
 
                                         <Viewbox Margin="2">
                                             <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN460}"/>
+                                                          IsChecked="{Binding SHDN460}"
+                                                          IsEnabled="{Binding SHDN12V}"/>
                                         </Viewbox>
 
                                         <Viewbox Grid.Column="1" Margin="2">
@@ -303,8 +313,10 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Viewbox Margin="2">
-                                            <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN5597}"/>
+                                            <ToggleButton  
+                                                Style="{DynamicResource ToggleButtonStyle}"
+                                                IsChecked="{Binding SHDN5597}"
+                                                IsEnabled="{Binding SHDN12V}"/>
                                         </Viewbox>
 
                                         <Viewbox Grid.Column="1" Margin="2">
@@ -410,7 +422,8 @@
 
                                             <Viewbox Margin="2">
                                                 <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN7971Low}"/>
+                                                              IsChecked="{Binding SHDN7971Low}"
+                                                              IsEnabled="{Binding SHDN12V}"/>
                                             </Viewbox>
 
                                             <Viewbox Grid.Column="1" Margin="2">
@@ -433,7 +446,8 @@
 
                                             <Viewbox Margin="2">
                                                 <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN7971High}"/>
+                                                              IsChecked="{Binding SHDN7971High}"
+                                                              IsEnabled="{Binding SHDN7971Low}"/>
                                             </Viewbox>
 
                                             <Viewbox Grid.Column="1" Margin="2">
@@ -843,7 +857,8 @@
 
                                             <Viewbox Margin="2">
                                                 <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN7972Low}"/>
+                                                              IsChecked="{Binding SHDN7972Low}"
+                                                              IsEnabled="{Binding SHDN12V}"/>
                                             </Viewbox>
 
                                             <Viewbox Grid.Column="1" Margin="2">
@@ -864,7 +879,8 @@
 
                                             <Viewbox Margin="2">
                                                 <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
-                                                              IsChecked="{Binding SHDN7972High}"/>
+                                                              IsChecked="{Binding SHDN7972High}"
+                                                              IsEnabled="{Binding SHDN7972Low}"/>
                                             </Viewbox>
 
                                             <Viewbox Grid.Column="1" Margin="2">

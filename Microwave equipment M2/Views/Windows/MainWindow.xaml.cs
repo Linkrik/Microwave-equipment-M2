@@ -1,5 +1,4 @@
-﻿
-//using Microwave_equipment_M2.ViewModels;
+﻿using Microwave_equipment_M2.ViewModels;
 
 using System;
 using System.Collections.Generic;
@@ -23,9 +22,13 @@ namespace Microwave_equipment_M2.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+
+
+            Closing += MainVM.OnWindowClosing;
             //DataContext = new MainWindowViewModel();
         }
 
