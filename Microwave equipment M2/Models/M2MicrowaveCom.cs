@@ -140,7 +140,8 @@ namespace Microwave_equipment_M2.Models
             SetPwr((uint)Power.Power797_2High, 0);  //Отключаем «Высокий» 797_2
             SetPwr((uint)Power.Power797_1Low, 0);   //Отключаем «Низкий» 797_1 
             SetPwr((uint)Power.Power797_2Low, 0);   //Отключаем «Низкий» 797_2
-            SetPwr((uint)Power.Power5597, 0);       //Отключаем 5597 //Сброс всех SHDN
+            SetPwr((uint)Power.Power5597, 0);       //Отключаем 5597 
+            SetPwr((uint)Power.Power5920, 0);       //Отключаем 5920 
 
             //Устанавливаем значения на DACs
             SetSwitch(0, 0);    // SETSW в состояние «-2,0В» (0-сост)
@@ -151,9 +152,9 @@ namespace Microwave_equipment_M2.Models
             SetSwitch(0, 1);    // SETSW в состояние «-2,0В» (0-сост)
 
             //Устанавливаем значения на Att и Chan
-            SetAtt(0, (short)Attenuators.Att1, 0);    //Устанавливаем значение Аттенюатора 1 в 0
-            SetAtt(0, (short)Attenuators.Att2, 0);    //Устанавливаем значение Аттенюатора 2 в 0
-            SetRfChnl(0, (short)Сhannels.Through);    //Устанавливаем канал "Сквозной"
+            //SetAtt(0, (short)Attenuators.Att1, 0);    //Устанавливаем значение Аттенюатора 1 в 0
+            //SetAtt(0, (short)Attenuators.Att2, 0);    //Устанавливаем значение Аттенюатора 2 в 0
+            //SetRfChnl(0, (short)Сhannels.Through);    //Устанавливаем канал "Сквозной"
         }
 
         private void SetEndParameters()
