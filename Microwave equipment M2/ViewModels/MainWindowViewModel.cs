@@ -71,6 +71,7 @@ namespace Microwave_equipment_M2.ViewModels
             get => Module.IsConnected;
             set
             {
+                //Визуально устанавливает параметры, до подключения к модулю
                 if (value)
                 {
                     SetInitParameters();
@@ -85,6 +86,16 @@ namespace Microwave_equipment_M2.ViewModels
                 {
                     Status = Module.Connect()? "подключен": "не подключен";
                 }
+
+
+                //Фактически устанавливает параметры, при подключеном модуле
+                if (Module.IsConnected)
+                {
+                    //переключаю канал на сквозной
+                    ThroughChannel = true;
+                }
+
+
 
                 OnPropertyChanged();
                 OnPropertyChanged("IsEnabledComPortsName");
@@ -126,8 +137,6 @@ namespace Microwave_equipment_M2.ViewModels
             SHDN7971High = false;
             SHDN7972Low = false;
             shdn7972high = false;
-
-            ThroughChannel = true;
         }
 
         #endregion Module
@@ -209,6 +218,7 @@ namespace Microwave_equipment_M2.ViewModels
             get => shdn12v;
             set
             {
+                //При отключении питания +12, должен отключить все остальные SHDN
                 if (!value)
                 {
                     SHDN460 = false;
@@ -220,6 +230,18 @@ namespace Microwave_equipment_M2.ViewModels
                 }
 
                 ControlPower(Power.Power12V, value);
+
+                if (value)
+                {
+                    //Включаю все аттенюаторы
+                    foreach (var att in Attenuators)
+                    {
+                        att.Value = 31.5m;
+                    }
+
+                }
+
+
                 Set(ref shdn12v, value);
             }
           
@@ -583,7 +605,7 @@ namespace Microwave_equipment_M2.ViewModels
                     {
                         newValue = decimal.Round(newValue / MinValueStep) * MinValueStep;
                     }
-                    newValue = decimal.Parse(newValue.ToString("G29"));
+                    newValue = decimal.Parse(newValue.ToString("#.00000"));
 
                     if (rump)
                     {
