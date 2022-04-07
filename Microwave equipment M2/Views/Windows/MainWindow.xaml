@@ -103,7 +103,8 @@
 
                                 <Button Grid.Column="1" Margin="5" Height="25"
                                         IsEnabled="{Binding IsEnabledComPortsName}"
-                                        Command="{Binding UpdateListComPortsCommand}"></Button>
+                                        Command="{Binding UpdateListComPortsCommand}"
+                                        Style="{DynamicResource ButtonUpdtCom}"></Button>
 
                             </Grid>
 
