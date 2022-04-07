@@ -31,6 +31,18 @@
     <!-- Text Colors -->
     <SolidColorBrush x:Key="TextHederColor" Color="#545b6a"/>
 
+    <!-- Button -->
+    <SolidColorBrush x:Key="ButtonTextActiveInColor" Color="#545b6a"/>
+    <SolidColorBrush x:Key="ButtonTextNotActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundClicColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ButtonTextIsEnabledColor" Color="#545b6a"/>
+    <SolidColorBrush x:Key="ButtonBackgroundMouseOverColor" Color="#7A7CFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundIsEnabled" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ButtonBrushIsEnabledColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ButtonBrushColor" Color="#496FFF"/>
+    
+
     <!-- RadioButton Colors -->
     <SolidColorBrush x:Key="RadioButtonTextActiveInColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="RadioButtonTextNotActiveColor" Color="#545b6a"/>
@@ -54,7 +66,7 @@
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushNotActiveColor" Color="#FFC5C6C7"/>
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushActiveColor" Color="#496FFF"/>
 
-    <!-- RepeatButton CheckBox Colors -->
+    <!-- CheckBox Colors -->
     <SolidColorBrush x:Key="CheckBoxIconActiveInColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="CheckBoxBackgroundActiveColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="CheckBoxBackgroundNotActiveColor" Color="#FFFFFF"/>
@@ -63,6 +75,18 @@
     <SolidColorBrush x:Key="CheckBoxBrushActiveColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="CheckBoxTextActiveColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="CheckBoxTextNotActiveColor" Color="#545b6a"/>
+
+    <!-- ComboBox Colors -->
+    <SolidColorBrush x:Key="ComboBoxIconActiveInColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ComboBoxIconNotActiveInColor" Color="#545b6a"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundNotActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundClicColor" Color="#7A7CFF"/>
+    <SolidColorBrush x:Key="ComboBoxBrushNotActiveColor" Color="#545b6a"/>
+    <SolidColorBrush x:Key="ComboBoxBrushActiveColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ComboBoxTextActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ComboBoxTextNotActiveColor" Color="#545b6a"/>
+
 
     <!-- Icon Color -->
     <SolidColorBrush x:Key="IconMoonColor" Color="#adb5d0"/> 

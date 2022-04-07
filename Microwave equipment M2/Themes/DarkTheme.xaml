@@ -30,6 +30,16 @@
     <!-- Text Colors -->
     <SolidColorBrush x:Key="TextHederColor" Color="#bdcae7"/>
 
+    <!-- Button -->
+    <SolidColorBrush x:Key="ButtonTextActiveInColor" Color="#bdcae7"/>
+    <SolidColorBrush x:Key="ButtonTextNotActiveColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundClicColor" Color="#0144a6"/>
+    <SolidColorBrush x:Key="ButtonBackgroundMouseOverColor" Color="#233DC7"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#496FFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundIsEnabled" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ButtonBrushIsEnabledColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="ButtonBrushColor" Color="#496FFF"/>
+
     <!-- RadioButton Colors -->
     <SolidColorBrush x:Key="RadioButtonTextActiveInColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="RadioButtonTextNotActiveColor" Color="#bdcae7"/>

@@ -141,6 +141,68 @@
     </Style>
     <!-- #endregion ToggleButton Style-->
 
+    <!--#region Button update list COM ports Style -->
+    <Style x:Key="ButtonUpdtCom" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonTextNotActiveColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackgroundColor}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="FontWeight" Value="500"/>
+        <Setter Property="FontFamily" Value="Nirmala UI"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border x:Name="rdBtnBorder" CornerRadius="5"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                MaxWidth="{TemplateBinding MaxWidth}"
+                                MaxHeight="{TemplateBinding MaxHeight}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}" 
+                           >
+
+                        <Viewbox Margin="2">
+                            <Canvas Height="470.083" Width="470.083" >
+                                <Path x:Name="icon" Fill="{DynamicResource ButtonTextNotActiveColor}" Data="M434.961,270.163c0,110.241-89.684,199.92-199.923,199.92c-110.235,0-199.917-89.679-199.917-199.92   c0-36.44,9.915-72.129,28.658-103.178l52.163,31.487c-13.013,21.56-19.89,46.353-19.896,71.697   c0,76.64,62.35,138.985,138.985,138.985c76.642,0,138.989-62.346,138.989-138.985c0-73.864-57.961-134.275-130.759-138.566h-29.808   l25.1,63.541c0.843,2.128,0.16,4.558-1.669,5.932c-1.827,1.38-4.351,1.374-6.168-0.026l-124.806-95.965   c-1.25-0.966-1.989-2.444-1.989-4.037c0-1.584,0.739-3.074,1.989-4.037L230.724,1.052C231.64,0.346,232.727,0,233.824,0   c1.082,0,2.154,0.34,3.068,1.022c1.829,1.374,2.512,3.807,1.669,5.938l-25.1,63.534l21.586-0.254c7.72,0,33.325,2.598,37.545,3.591   C364.931,91.46,434.961,172.766,434.961,270.163z" />
+                            </Canvas>
+                        </Viewbox>
+
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="rdBtnBorder" Property="Background"
+                                        Value="{DynamicResource ButtonBackgroundMouseOverColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="rdBtnBorder" Property="Background"
+                                        Value="{DynamicResource ButtonBackgroundClicColor}"/>
+                            <Setter TargetName="icon" Property="Fill"
+                                        Value="{DynamicResource ButtonTextActiveInColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="rdBtnBorder" Property="Background"
+                                        Value="{DynamicResource ButtonBackgroundIsEnabled}"/>
+                            <Setter TargetName="icon" Property="Fill"
+                                        Value="{DynamicResource ButtonTextIsEnabledColor}"/>
+                            <Setter TargetName="rdBtnBorder" Property="BorderBrush"
+                                    Value="{DynamicResource ButtonBrushIsEnabledColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion Button update list COM ports Style -->
+   
     <!--#region RadioButton Style -->
     <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent"/>
@@ -241,7 +303,7 @@
                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            Visibility="Collapsed"
-                                           Foreground="{DynamicResource PrimaryTextBoxGrayColor}"
+                                           Foreground="{DynamicResource TextHederColor}"
                                            />
                                         <ContentPresenter Width="50"></ContentPresenter>
                                     </Grid>
@@ -850,7 +912,7 @@
     <!--#endregion-->
 
     <!--#region TabControl Style-->
-    <Style x:Key="TabControlStyle" TargetType="TabControl">
+    <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}" >
         <Setter Property="Background" Value="{DynamicResource PrimaryBorderBackgroundColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -885,6 +947,14 @@
 
     </Style>
     <!--#endregion-->
+
+
+    <!-- #region ComboBox -->
+    
+    <!-- #endregion ComboBox -->
+
+
+
 
 
 </ResourceDictionary>
