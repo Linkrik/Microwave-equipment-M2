@@ -383,15 +383,15 @@ namespace Microwave_equipment_M2.Models
     enum Power
     {
         None = 0,
-        Power12V = 1,
-        Power460 = 2,
-        Power5597 = 4,
-        Power797_1Low = 8,
-        Power797_1High = 16,
-        Power797_2Low = 32,
-        Power797_2High = 64,
+        Power797_1High = 1,
+        Power797_2High = 2,
+        Power797_1Low = 4,
+        Power797_2Low = 8,
+        Power460 = 16,
+        Power12V = 32,
+        Power5597 = 64,
         Power5920 = 128,
-        All = Power12V| Power460| Power5597| Power797_1Low| Power797_1High| Power797_2Low| Power797_2High| Power5920
+        All = Power12V | Power460 | Power5597 | Power797_1Low | Power797_1High | Power797_2Low | Power797_2High | Power5920
     }
     #endregion Enums
 

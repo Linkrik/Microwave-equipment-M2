@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microwave equipment M2", "Microwave equipment M2\Microwave equipment M2.csproj", "{3DD2153B-BFAF-44B8-9AB9-F1F1C576681F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{669E01CE-CA3A-4A65-9B1F-923456F9B9F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEM2Console", "Tests\MEM2Console\MEM2Console.csproj", "{6B21D01D-5BD4-47CC-82FF-2212874CD7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MEM2Console", "Tests\MEM2Console\MEM2Console.csproj", "{6B21D01D-5BD4-47CC-82FF-2212874CD7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEM2WpfTest", "Tests\MEM2WpfTest\MEM2WpfTest.csproj", "{E5237F3D-FE21-4752-B29C-0B05635C7085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MEM2WpfTest", "Tests\MEM2WpfTest\MEM2WpfTest.csproj", "{E5237F3D-FE21-4752-B29C-0B05635C7085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
