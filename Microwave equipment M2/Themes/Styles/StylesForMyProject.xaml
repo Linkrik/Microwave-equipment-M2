@@ -333,6 +333,11 @@
                                     Value="{DynamicResource TextBoxNumerecUpDownTextActiveInColor}"/>
                         </Trigger>
 
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource TextBoxNumerecUpDownBackgroundFalseEnabledColor}"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -397,10 +402,19 @@
                             <Setter TargetName="btnBorder" Property="BorderBrush" 
                                     Value="{DynamicResource RepeatButtonNumerecUpDownBrushActiveColor}"/>
                         </Trigger>
+                        
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="btnBorder" Property="Background"
                                         Value="{DynamicResource RepeatButtonNumerecUpDownBackgroundClicColor}"/>
                         </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource RepeatButtonNumerecUpDownBackgroundFalseEnabledColor}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource RepeatButtonNumerecUpDownForegroundFalseEnabledColor}"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -465,10 +479,19 @@
                             <Setter TargetName="btnBorder" Property="BorderBrush" 
                                     Value="{DynamicResource RepeatButtonNumerecUpDownBrushActiveColor}"/>
                         </Trigger>
+                        
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="btnBorder" Property="Background"
                                         Value="{DynamicResource RepeatButtonNumerecUpDownBackgroundClicColor}"/>
                         </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource RepeatButtonNumerecUpDownBackgroundFalseEnabledColor}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource RepeatButtonNumerecUpDownForegroundFalseEnabledColor}"/>
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -549,6 +572,11 @@
                                         Value="{DynamicResource TextBoxNumerecUpDownBrushColorActiveColor}"/>
                             <Setter Property="Foreground"
                                     Value="{DynamicResource TextBoxNumerecUpDownTextActiveInColor}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource TextBoxNumerecUpDownBackgroundFalseEnabledColor}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

@@ -51,6 +51,7 @@
     <SolidColorBrush x:Key="TextBoxNumerecUpDownTextActiveInColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="TextBoxNumerecUpDownTextNotActiveColor" Color="#bdcae7"/>
     <SolidColorBrush x:Key="TextBoxNumerecUpDownBackgroundColor" Color="#1c3251"/>
+    <SolidColorBrush x:Key="TextBoxNumerecUpDownBackgroundFalseEnabledColor" Color="#FF77787A"/>
     <SolidColorBrush x:Key="TextBoxNumerecUpDownBrushColorActiveColor" Color="#496FFF"/>
     <SolidColorBrush x:Key="TextBoxNumerecUpDownBrushColorNotActiveColor" Color="#FFC5C6C7"/>
 
@@ -61,6 +62,8 @@
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundNotActiveColor" Color="#1c3251"/>
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundClicColor" Color="#0144a6"/>
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushNotActiveColor" Color="#FFC5C6C7"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBackgroundFalseEnabledColor" Color="#FF77787A"/>
+    <SolidColorBrush x:Key="RepeatButtonNumerecUpDownForegroundFalseEnabledColor" Color="#545b6a"/>
     <SolidColorBrush x:Key="RepeatButtonNumerecUpDownBrushActiveColor" Color="#496FFF"/>
 
     <!-- CheckBox Colors -->
