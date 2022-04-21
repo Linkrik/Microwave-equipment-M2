@@ -144,12 +144,12 @@ namespace Microwave_equipment_M2.Models
             SetPwr((uint)Power.Power5920, 0);       //Отключаем 5920 
 
             //Устанавливаем значения на DACs
-            SetSwitch(0, 0);    // SETSW в состояние «-2,0В» (0-сост)
-            SetDac((short)Dacs.Dac1_Att3, dac12CodeInit); //Устанавливаем значение ЦАП1 -2,0В
-            SetDac((short)Dacs.Dac2_Att3, dac12CodeInit); //Устанавливаем значение ЦАП2 -2,0В
-            SetDac((short)Dacs.Dac3_797_1, dac34CodeInit); //Устанавливаем значение ЦАП3 -2,0В
-            SetDac((short)Dacs.DAC4_797_2, dac34CodeInit); //Устанавливаем значение ЦАП4 -2,0В
-            SetSwitch(0, 1);    // SETSW в состояние «-2,0В» (0-сост)
+            //SetSwitchAll(0);    //переключить все свитчи SETSW в состояние «-2,0В» (0-сост)
+            //SetDac((short)Dacs.Dac1_Att3, dac12CodeInit); //Устанавливаем значение ЦАП1 -2,0В
+            //SetDac((short)Dacs.Dac2_Att3, dac12CodeInit); //Устанавливаем значение ЦАП2 -2,0В
+            //SetDac((short)Dacs.Dac3_797_1, dac34CodeInit); //Устанавливаем значение ЦАП3 -2,0В
+            //SetDac((short)Dacs.DAC4_797_2, dac34CodeInit); //Устанавливаем значение ЦАП4 -2,0В
+            //SetSwitchAll(1);    //переключить все свитчи SETSW в состояние канала DACs (1-сост)
 
             //Устанавливаем значения на Att и Chan
             //SetAtt(0, (short)Attenuators.Att1, 0);    //Устанавливаем значение Аттенюатора 1 в 0
@@ -159,8 +159,8 @@ namespace Microwave_equipment_M2.Models
 
         private void SetEndParameters()
         {
-            SetDacRamp((short)Dacs.Dac3_797_1, dac34CodeInit, Convert.ToInt16(decimal.Round(0.01m / 0.00061m))); //Устанавливаем значение ЦАП3 -2,0В 
-            SetDacRamp((short)Dacs.DAC4_797_2, dac34CodeInit, Convert.ToInt16(decimal.Round(0.01m / 0.00061m))); //Устанавливаем значение ЦАП4 -2,0В
+            SetDacRamp((short)Dacs.Dac3_797_1, dac34CodeInit, Convert.ToInt16(decimal.Round(0.160m / 0.00061m))); //Устанавливаем значение ЦАП3 -2,0В 
+            SetDacRamp((short)Dacs.DAC4_797_2, dac34CodeInit, Convert.ToInt16(decimal.Round(0.160m / 0.00061m))); //Устанавливаем значение ЦАП4 -2,0В
 
             SetPwr((uint)Power.Power460, 0); //Отключаем 460
             SetPwr((uint)Power.Power797_1High, 0); //Отключаем «Высокий» 797_1 
@@ -172,7 +172,49 @@ namespace Microwave_equipment_M2.Models
             SetSwitch(0, 0);    // SETSW в состояние «-2,0В» (0-сост)
         }
 
-        private void SetSwitch(short numberSwitch, short numberChanal)
+        private bool Send(byte[] cmd)
+        {
+            bool status = true;
+            try
+            {
+                comPort.Write(cmd, 0, cmd.Length);
+            }
+            catch (Exception)
+            {
+                status = false;
+            }
+
+            System.Threading.Thread.Sleep(1);
+            return status;
+        }
+        private bool Receive(byte[] bufReceve)
+        {
+            bool status = true;
+            try
+            {
+                int counter = 0;
+                while (comPort.BytesToRead < bufReceve.Length && counter < 100)
+                {
+                    System.Threading.Thread.Sleep(1);
+                    counter++;
+                }
+
+                if (comPort.BytesToRead >= bufReceve.Length)
+                {
+                    comPort.Read(bufReceve, 0, bufReceve.Length);
+                }
+            }
+            catch (Exception)
+            {
+                status = false;
+            }
+
+            System.Threading.Thread.Sleep(1);
+            return status;
+        }
+
+        #region Set Switch
+        public void SetSwitch(short numberSwitch, short numberChanal)
         {
             if (IsConnected)
             {
@@ -182,16 +224,19 @@ namespace Microwave_equipment_M2.Models
                 BitConverter.GetBytes(numberSwitch).CopyTo(cmd, 2);
                 BitConverter.GetBytes(numberChanal).CopyTo(cmd, 4);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
+
+        public void SetSwitchAll(short numberChanal)
+        {
+            SetSwitch((short)Switchs.SW_1_S1Att, numberChanal);
+            SetSwitch((short)Switchs.SW_2_S2Att, numberChanal);
+            SetSwitch((short)Switchs.SW_3_S1Dac, numberChanal);
+            SetSwitch((short)Switchs.SW_4_S2Dac, numberChanal);
+        }
+        #endregion Set Switch
+
 
 
         public void SetAtt(short flags, short numberAtt, short valueAtt)
@@ -205,14 +250,7 @@ namespace Microwave_equipment_M2.Models
                 BitConverter.GetBytes(numberAtt).CopyTo(cmd, 4);
                 BitConverter.GetBytes(valueAtt).CopyTo(cmd, 6);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
 
@@ -227,14 +265,7 @@ namespace Microwave_equipment_M2.Models
                 BitConverter.GetBytes(numberDAC).CopyTo(cmd, 2);
                 BitConverter.GetBytes(valueDAC).CopyTo(cmd, 4);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
 
@@ -242,21 +273,14 @@ namespace Microwave_equipment_M2.Models
         {
             if (IsConnected)
             {
-                short idСomand = 0x1C;
+                short idСomand = 0x1E;
                 byte[] cmd = new byte[10];
                 BitConverter.GetBytes(idСomand).CopyTo(cmd, 0);     // SETATT    sendBytes[0] = 0x13;
                 BitConverter.GetBytes(numberDAC).CopyTo(cmd, 2);
                 BitConverter.GetBytes(valueDAC).CopyTo(cmd, 4);
                 BitConverter.GetBytes(stepIncrement).CopyTo(cmd, 8);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
         #endregion DAC
@@ -272,14 +296,7 @@ namespace Microwave_equipment_M2.Models
                 BitConverter.GetBytes(flags).CopyTo(cmd, 2);
                 BitConverter.GetBytes(numberChanal).CopyTo(cmd, 4);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
 
@@ -294,14 +311,7 @@ namespace Microwave_equipment_M2.Models
                 BitConverter.GetBytes(numberPwr).CopyTo(cmd, 2);
                 BitConverter.GetBytes(activePwr).CopyTo(cmd, 6);
 
-                try
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                }
-                catch (Exception)
-                {
-                    IsConnected = false;
-                }
+                if (!Send(cmd)) IsConnected = false;
             }
         }
 
@@ -317,35 +327,12 @@ namespace Microwave_equipment_M2.Models
             // Receive
             byte[] bufReceve = new byte[2];
 
-            try
-            {
-                if (IsConnected)
-                {
-                    comPort.Write(cmd, 0, cmd.Length);
-                    System.Threading.Thread.Sleep(1);
-
-                    int counter = 0;
-                    while (comPort.BytesToRead < 2 && counter < 100)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        counter++;
-                    }
-
-                    if (comPort.BytesToRead >= 2)
-                    {
-                        comPort.Read(bufReceve, 0, bufReceve.Length);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                IsConnected = false;
-            }
-
+            if (!Send(cmd)) IsConnected = false;
+            if (!Receive(bufReceve)) IsConnected = false;
+         
             short val = BitConverter.ToInt16(bufReceve, 0);
             return ((double)(val - 27315) / 100);
         }
-
     }
 
     #region Enums
@@ -377,6 +364,14 @@ namespace Microwave_equipment_M2.Models
         TermSHDN5597 = 1,
         TermSHDN797_1,
         TermSHDN797_2
+    }
+
+    enum Switchs
+    {
+        SW_1_S1Att,
+        SW_2_S2Att,
+        SW_3_S1Dac,
+        SW_4_S2Dac
     }
 
     [Flags]

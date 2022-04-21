@@ -154,13 +154,22 @@ namespace Microwave_equipment_M2.ViewModels
                 if (channel == value)
                     return;
 
-                if (channel == Сhannels.LowFrequency)
+                if (value == Сhannels.UM40 || value == Сhannels.Amplifying) 
                 {
-                    Module.SetPwr((uint)Power.Power5920, (uint)Power.All);
+                    Enabled460 = false;
+                    EnabledBorder7971 = true;
                 }
                 else
                 {
-                    Module.SetPwr((uint)Power.Power5920, 0);
+                    Dacs[2].Value = -2;
+                    SHDN7971High = false;
+                    SHDN7971Low = false;
+                    EnabledBorder7971 = false;
+
+                    if (SHDN7972High)
+                    {
+                        Enabled460 = true;
+                    }
                 }
 
                 channel = value;
@@ -208,6 +217,28 @@ namespace Microwave_equipment_M2.ViewModels
             Module.SetRfChnl(0, (short)сhannelName);
         }
 
+
+        private bool enabledBorder7971 = false;
+        public bool EnabledBorder7971
+        {
+            get => enabledBorder7971;
+            set => Set(ref enabledBorder7971, value);
+        }
+
+        private bool enabled460 = false;
+        public bool Enabled460
+        {
+            get => enabled460;
+            set 
+            {
+                if (!value)
+                {
+                    SHDN460 = false;
+                }
+
+                Set(ref enabled460, value);
+            }
+        }
         #endregion Channels
 
         #region SHDNs
@@ -222,11 +253,9 @@ namespace Microwave_equipment_M2.ViewModels
                 if (!value)
                 {
                     SHDN460 = false;
-                    SHDN7971High = false;
-                    SHDN7972High = false;
-                    SHDN7971Low = false;
                     SHDN7972Low = false;
                     SHDN5597 = false;
+                    SHDN5920 = false;
                 }
 
                 ControlPower(Power.Power12V, value);
@@ -239,6 +268,17 @@ namespace Microwave_equipment_M2.ViewModels
                         att.Value = 31.5m;
                     }
 
+                    //переключить все свитчи SETSW в состояние «-2,0В» (0-сост)
+                    Module.SetSwitchAll(0);
+
+                    //Включаю все DAC в -2В
+                    for (int i = 0; i < Dacs.Count; i++)
+                    {
+                        Dacs[i].Value = i==0? Dacs[i].MaxValue : Dacs[i].MinValue;
+                    }
+
+                    //переключить все свитчи SETSW в состояние канала DACs (1-сост)
+                    Module.SetSwitchAll(0);
                 }
 
 
@@ -270,6 +310,18 @@ namespace Microwave_equipment_M2.ViewModels
 
         }
 
+        private bool shdn5920 = false;
+        public bool SHDN5920
+        {
+            get => shdn5920;
+            set
+            {
+                ControlPower(Power.Power5920, value);
+                Set(ref shdn5920, value);
+            }
+
+        }
+
         private bool shdn7971low = false;
         public bool SHDN7971Low
         {
@@ -292,6 +344,18 @@ namespace Microwave_equipment_M2.ViewModels
             get => shdn7971high;
             set
             {
+                if (!value)
+                {
+                    Dacs[2].Value = -2;
+                }
+                
+
+                if (valueChannel == Сhannels.UM40 || valueChannel == Сhannels.Amplifying)
+                {
+                    Enabled460 = value;
+                }
+
+
                 ControlPower(Power.Power797_1High, value);
                 Set(ref shdn7971high, value);
             }
@@ -320,6 +384,19 @@ namespace Microwave_equipment_M2.ViewModels
             get => shdn7972high;
             set
             {
+                if (!(valueChannel == Сhannels.UM40 || valueChannel == Сhannels.Amplifying))
+                {
+                    Enabled460 = value;
+                }
+
+                if (!value)
+                {
+                    Dacs[3].Value = -2;
+                    SHDN7971High = false;
+                    SHDN7971Low = false;
+                }
+
+
                 ControlPower(Power.Power797_2High,value);
                 Set(ref shdn7972high, value);
             }

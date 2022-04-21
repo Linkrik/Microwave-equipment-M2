@@ -243,8 +243,9 @@
                         <Border Grid.Row="1"  Style="{DynamicResource BorderGroupStyle}" >
                             <Grid >
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.741*"/>
+                                    <RowDefinition Height="0.94*"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
@@ -292,7 +293,7 @@
                                         <Viewbox Margin="2">
                                             <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
                                                           IsChecked="{Binding SHDN460}"
-                                                          IsEnabled="{Binding SHDN12V}"/>
+                                                          IsEnabled="{Binding Enabled460}"/>
                                         </Viewbox>
 
                                         <Viewbox Grid.Column="1" Margin="2">
@@ -329,8 +330,35 @@
                                     </Grid>
                                 </Border>
                                 <!--#endregion SHDN 5597-->
-                                
-                                <Grid Grid.Row="5">
+
+
+                                <!--#region SHDN 5920-->
+                                <Border Grid.Row="5" Style="{DynamicResource BorderHedarStyle}">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Viewbox Margin="2">
+                                            <ToggleButton  
+                                                Style="{DynamicResource ToggleButtonStyle}"
+                                                IsChecked="{Binding SHDN5920}"
+                                                IsEnabled="{Binding SHDN12V}"/>
+                                        </Viewbox>
+
+                                        <Viewbox Grid.Column="1" Margin="2">
+                                            <TextBlock Text="5920"
+                                                       Style="{DynamicResource TextCommonStyle}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"></TextBlock>
+                                        </Viewbox>
+                                    </Grid>
+                                </Border>
+                                <!--#endregion SHDN 5920-->
+
+
+                                <Grid Grid.Row="6">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="1.5*"/>
@@ -373,7 +401,7 @@
 
                         <!--#region Колонка 2 / 3-->
                         <!--#region Верхняя ячейка-->
-                        <Border Style="{DynamicResource BorderGroupStyle}">
+                        <Border Style="{DynamicResource BorderGroupStyle}" IsEnabled="{Binding EnabledBorder7971}">
                             
                             <Grid >
                                 <Grid.RowDefinitions>
@@ -424,7 +452,7 @@
                                             <Viewbox Margin="2">
                                                 <ToggleButton Style="{DynamicResource ToggleButtonStyle}"
                                                               IsChecked="{Binding SHDN7971Low}"
-                                                              IsEnabled="{Binding SHDN12V}"/>
+                                                              IsEnabled="{Binding SHDN7972High}"/>
                                             </Viewbox>
 
                                             <Viewbox Grid.Column="1" Margin="2">
@@ -482,7 +510,8 @@
                                                 Grid.Column="2" Grid.Row="2"
                                                 Style="{DynamicResource TextBoxStepDACStyle}"
                                                 x:Name="StepDAC3"
-                                                Text="{Binding Dacs[2].Step}" >
+                                                Text="{Binding Dacs[2].Step}" 
+                                                IsEnabled="{Binding SHDN7971High}">
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC3}"
@@ -511,7 +540,8 @@
                                                     Grid.Column="0"
                                                     Grid.Row="0"
                                                     Style="{DynamicResource TextBoxDACStyle}"
-                                                    Text="{Binding Dacs[2].Value}">
+                                                    Text="{Binding Dacs[2].Value}"
+                                                    IsEnabled="{Binding SHDN7971High}">
                                                     <TextBox.InputBindings>
                                                         <KeyBinding Command="{Binding EnterValueCommand}"
                                                                     CommandParameter="{Binding ElementName=DAC3}"
@@ -520,14 +550,16 @@
                                                 </TextBox>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="0"
-                                                                  Style="{DynamicResource UpRepeatButtonDACStyle}"
-                                                                  Command="{Binding UpButtonDacCommand}"
-                                                                  CommandParameter="{Binding Dacs[2]}"/>
+                                                          Style="{DynamicResource UpRepeatButtonDACStyle}"
+                                                          Command="{Binding UpButtonDacCommand}"
+                                                          CommandParameter="{Binding Dacs[2]}"
+                                                          IsEnabled="{Binding SHDN7971High}"/>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="1"
-                                                              Command="{Binding DownButtonDacCommand}"
-                                                              CommandParameter="{Binding Dacs[2]}"
-                                                              Style="{DynamicResource DownRepeatButtonDACStyle}"/>
+                                                          Command="{Binding DownButtonDacCommand}"
+                                                          CommandParameter="{Binding Dacs[2]}"
+                                                          Style="{DynamicResource DownRepeatButtonDACStyle}"
+                                                          IsEnabled="{Binding SHDN7971High}"/>
                                         </Grid>
                                         </Border>
 
@@ -915,7 +947,8 @@
                                     <TextBox Grid.Column="2" Grid.Row="2"
                                                 x:Name="StepDAC4"
                                                 Style="{DynamicResource TextBoxStepDACStyle}"
-                                                Text="{Binding Dacs[3].Step}">
+                                                Text="{Binding Dacs[3].Step}"
+                                             IsEnabled="{Binding SHDN7972High}">
                                         <TextBox.InputBindings>
                                             <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=StepDAC4}"
@@ -943,7 +976,8 @@
                                                 Grid.Column="0"
                                                 Grid.Row="0"
                                                 Style="{DynamicResource TextBoxDACStyle}"
-                                                Text="{Binding Dacs[3].Value}">
+                                                Text="{Binding Dacs[3].Value}"
+                                                IsEnabled="{Binding SHDN7972High}">
                                                 <TextBox.InputBindings>
                                                     <KeyBinding Command="{Binding EnterValueCommand}"
                                                                 CommandParameter="{Binding ElementName=DAC4}"
@@ -954,12 +988,14 @@
                                             <RepeatButton Grid.Column="1" Grid.Row="0"
                                                           Style="{DynamicResource UpRepeatButtonDACStyle}"
                                                           Command="{Binding UpButtonDacCommand}"
-                                                          CommandParameter="{Binding Dacs[3]}"/>
+                                                          CommandParameter="{Binding Dacs[3]}"
+                                                          IsEnabled="{Binding SHDN7972High}"/>
 
                                             <RepeatButton Grid.Column="1" Grid.Row="1"
                                                           Style="{DynamicResource DownRepeatButtonDACStyle}"
                                                           Command="{Binding DownButtonDacCommand}"
-                                                          CommandParameter="{Binding Dacs[3]}"/>
+                                                          CommandParameter="{Binding Dacs[3]}"
+                                                          IsEnabled="{Binding SHDN7972High}"/>
                                         </Grid>
                                     </Border>
                                     <!--#endregion-->
