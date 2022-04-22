@@ -71,12 +71,6 @@ namespace Microwave_equipment_M2.ViewModels
             get => Module.IsConnected;
             set
             {
-                //Визуально устанавливает параметры, до подключения к модулю
-                if (value)
-                {
-                    SetInitParameters();
-                }
-
                 if (Module.IsConnected)
                 {
                     Module.Disconnect();
@@ -118,26 +112,6 @@ namespace Microwave_equipment_M2.ViewModels
         #endregion
 
 
-        private void SetInitParameters()
-        {
-            foreach (var dac in Dacs)
-            {
-                dac.Value = -2;
-            }
-
-            foreach (var att in Attenuators)
-            {
-                att.Value = 0;
-            }
-
-            SHDN12V = false;
-            SHDN460 = false;
-            SHDN5597 = false;
-            SHDN7971Low = false;
-            SHDN7971High = false;
-            SHDN7972Low = false;
-            shdn7972high = false;
-        }
 
         #endregion Module
 
@@ -156,8 +130,11 @@ namespace Microwave_equipment_M2.ViewModels
 
                 if (value == Сhannels.UM40 || value == Сhannels.Amplifying) 
                 {
-                    Enabled460 = false;
-                    EnabledBorder7971 = true;
+                    if (!SHDN7971High)
+                    {
+                        Enabled460 = false;
+                        EnabledBorder7971 = true;
+                    }
                 }
                 else
                 {
@@ -252,6 +229,21 @@ namespace Microwave_equipment_M2.ViewModels
                 //При отключении питания +12, должен отключить все остальные SHDN
                 if (!value)
                 {
+                    //Включаю все аттенюаторы
+                    foreach (var att in Attenuators)
+                    {
+                        att.Value = 31.5m;
+                    }
+
+                    //Включаю все DAC в minValue кроме 0
+                    for (int i = 0; i < Dacs.Count; i++)
+                    {
+                        Dacs[i].Value = i == 0 ? Dacs[i].MaxValue : Dacs[i].MinValue;
+                    }
+
+                    //переключить все свитчи SETSW в состояние «-2,0В» (0-сост)
+                    Module.SetSwitchAll(0);
+
                     SHDN460 = false;
                     SHDN7972Low = false;
                     SHDN5597 = false;
@@ -278,7 +270,7 @@ namespace Microwave_equipment_M2.ViewModels
                     }
 
                     //переключить все свитчи SETSW в состояние канала DACs (1-сост)
-                    Module.SetSwitchAll(0);
+                    Module.SetSwitchAll(1);
                 }
 
 
@@ -643,6 +635,7 @@ namespace Microwave_equipment_M2.ViewModels
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
+            SHDN12V = false;
             Module.Disconnect();
         }
         #endregion

@@ -84,7 +84,6 @@ namespace Microwave_equipment_M2.Models
         {
             if (comPort != null && comPort.IsOpen)
             {
-                SetEndParameters();
                 comPort.Close();
             }
             IsConnected = false;
@@ -142,35 +141,8 @@ namespace Microwave_equipment_M2.Models
             SetPwr((uint)Power.Power797_2Low, 0);   //Отключаем «Низкий» 797_2
             SetPwr((uint)Power.Power5597, 0);       //Отключаем 5597 
             SetPwr((uint)Power.Power5920, 0);       //Отключаем 5920 
-
-            //Устанавливаем значения на DACs
-            //SetSwitchAll(0);    //переключить все свитчи SETSW в состояние «-2,0В» (0-сост)
-            //SetDac((short)Dacs.Dac1_Att3, dac12CodeInit); //Устанавливаем значение ЦАП1 -2,0В
-            //SetDac((short)Dacs.Dac2_Att3, dac12CodeInit); //Устанавливаем значение ЦАП2 -2,0В
-            //SetDac((short)Dacs.Dac3_797_1, dac34CodeInit); //Устанавливаем значение ЦАП3 -2,0В
-            //SetDac((short)Dacs.DAC4_797_2, dac34CodeInit); //Устанавливаем значение ЦАП4 -2,0В
-            //SetSwitchAll(1);    //переключить все свитчи SETSW в состояние канала DACs (1-сост)
-
-            //Устанавливаем значения на Att и Chan
-            //SetAtt(0, (short)Attenuators.Att1, 0);    //Устанавливаем значение Аттенюатора 1 в 0
-            //SetAtt(0, (short)Attenuators.Att2, 0);    //Устанавливаем значение Аттенюатора 2 в 0
-            //SetRfChnl(0, (short)Сhannels.Through);    //Устанавливаем канал "Сквозной"
         }
 
-        private void SetEndParameters()
-        {
-            SetDacRamp((short)Dacs.Dac3_797_1, dac34CodeInit, Convert.ToInt16(decimal.Round(0.160m / 0.00061m))); //Устанавливаем значение ЦАП3 -2,0В 
-            SetDacRamp((short)Dacs.DAC4_797_2, dac34CodeInit, Convert.ToInt16(decimal.Round(0.160m / 0.00061m))); //Устанавливаем значение ЦАП4 -2,0В
-
-            SetPwr((uint)Power.Power460, 0); //Отключаем 460
-            SetPwr((uint)Power.Power797_1High, 0); //Отключаем «Высокий» 797_1 
-            SetPwr((uint)Power.Power797_2High, 0); //Отключаем «Высокий» 797_2
-            SetPwr((uint)Power.Power797_1Low, 0); //Отключаем «Низкий» 797_1 
-            SetPwr((uint)Power.Power797_2Low, 0); //Отключаем «Низкий» 797_2
-            SetPwr((uint)Power.Power5597, 0); //Отключаем 5597
-            SetPwr((uint)Power.Power12V, 0); //Отключаем 12
-            SetSwitch(0, 0);    // SETSW в состояние «-2,0В» (0-сост)
-        }
 
         private bool Send(byte[] cmd)
         {
