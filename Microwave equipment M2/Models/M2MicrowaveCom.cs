@@ -16,9 +16,6 @@ namespace Microwave_equipment_M2.Models
         private bool isConnected;
         private string portName;
 
-        private uint dac12CodeInit = (uint)(2 / 0.00122m); // код для DAC1 и DAC2 = 2 Вольта 
-        private uint dac34CodeInit = (uint)(2 / 0.00061m); // код для DAC3 и DAC4 = 2 Вольта
-
         public M2MicrowaveCom()
         {
             comPort = null;

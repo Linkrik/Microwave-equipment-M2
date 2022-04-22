@@ -73,6 +73,7 @@ namespace Microwave_equipment_M2.ViewModels
             {
                 if (Module.IsConnected)
                 {
+                    SHDN12V = false;
                     Module.Disconnect();
                     Status = "не подключен";
                 }
@@ -603,8 +604,8 @@ namespace Microwave_equipment_M2.ViewModels
             #region ADC and ATT
             Dacs = new ObservableCollection<Dac>
             {
-                new Dac(-5,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac1_Att3,Module),
-                new Dac(-5,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac2_Att3,Module),
+                new Dac(-4.9959m,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac1_Att3,Module),
+                new Dac(-4.9959m,-0.3m,0.00122m,-5,false,9.76m, Models.Dacs.Dac2_Att3,Module),
                 new Dac(-2,-0.3m,0.00061m,-2,true,9.76m, Models.Dacs.Dac3_797_1,Module),
                 new Dac(-2,-0.3m,0.00061m,-2,true,9.76m, Models.Dacs.DAC4_797_2,Module),
             };
