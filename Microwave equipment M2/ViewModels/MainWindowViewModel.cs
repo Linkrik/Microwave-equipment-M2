@@ -239,7 +239,7 @@ namespace Microwave_equipment_M2.ViewModels
                     //Включаю все DAC в minValue кроме 0
                     for (int i = 0; i < Dacs.Count; i++)
                     {
-                        Dacs[i].Value = i == 0 ? Dacs[i].MaxValue : Dacs[i].MinValue;
+                        Dacs[i].Value = i == 1 ? Dacs[i].MaxValue : Dacs[i].MinValue;
                     }
 
                     //переключить все свитчи SETSW в состояние «-2,0В» (0-сост)
@@ -267,7 +267,7 @@ namespace Microwave_equipment_M2.ViewModels
                     //Включаю все DAC в -2В
                     for (int i = 0; i < Dacs.Count; i++)
                     {
-                        Dacs[i].Value = i==0? Dacs[i].MaxValue : Dacs[i].MinValue;
+                        Dacs[i].Value = i==1? Dacs[i].MaxValue : Dacs[i].MinValue;
                     }
 
                     //переключить все свитчи SETSW в состояние канала DACs (1-сост)
